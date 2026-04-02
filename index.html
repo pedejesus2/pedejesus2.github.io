@@ -12,98 +12,100 @@
       background: #060810;
       font-family: 'JetBrains Mono', monospace;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-    }
-
-    .os-wrap {
-      width: 100%;
-      max-width: 760px;
-      background: #0d0f14;
-      border-radius: 12px;
       overflow: hidden;
-      border: 1px solid #21262d;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-      animation: fadeIn 0.5s ease;
+      user-select: none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* DESKTOP BG GRID */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(88,166,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(88,166,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
     }
 
     /* MENUBAR */
     .menubar {
-      background: #161b22;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 28px;
+      background: rgba(22,27,34,0.95);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 7px 16px;
+      padding: 0 16px;
       font-size: 12px;
       color: #8b949e;
       border-bottom: 1px solid #21262d;
+      z-index: 1000;
     }
     .menubar .brand { color: #e6edf3; font-weight: 700; }
     .menubar a { color: #8b949e; text-decoration: none; transition: color 0.15s; }
     .menubar a:hover { color: #58a6ff; }
+    .menubar .right { margin-left: auto; font-size: 11px; color: #484f58; }
 
-    /* BODY LAYOUT */
-    .desktop { display: flex; min-height: 460px; }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 58px;
-      background: #0d1117;
-      border-right: 1px solid #21262d;
-      padding: 12px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+    /* DESKTOP AREA */
+    .desktop {
+      position: fixed;
+      top: 28px; bottom: 40px;
+      left: 0; right: 0;
     }
-    .icon-btn {
-      width: 38px; height: 38px;
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      transition: border-color 0.15s;
-      cursor: pointer;
-    }
-    .icon-btn:hover { border-color: #58a6ff; }
-    .icon-btn svg { display: block; }
 
-    /* MAIN */
-    .main-area { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-
-    /* WINDOW */
+    /* DRAGGABLE WINDOW */
     .window {
+      position: absolute;
+      top: 60px; left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      max-width: calc(100vw - 32px);
       background: #0d1117;
       border: 1px solid #30363d;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+      animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
     }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateX(-50%) scale(0.95); }
+      to   { opacity: 1; transform: translateX(-50%) scale(1); }
+    }
+
+    .window.dragging {
+      box-shadow: 0 48px 100px rgba(0,0,0,0.8);
+      transform: none;
+      transition: box-shadow 0.1s;
+    }
+
+    /* TITLE BAR — drag handle */
     .window-bar {
       background: #161b22;
-      padding: 8px 12px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       border-bottom: 1px solid #21262d;
+      cursor: grab;
     }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .window-bar:active { cursor: grabbing; }
+
+    .dots { display: flex; gap: 6px; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; cursor: pointer; transition: filter 0.15s; }
+    .dot:hover { filter: brightness(1.3); }
     .dot.r { background: #ff5f57; }
     .dot.y { background: #febc2e; }
     .dot.g { background: #28c840; }
-    .window-title {
-      flex: 1; text-align: center;
-      font-size: 11px; color: #8b949e;
+
+    .window-title { flex: 1; text-align: center; font-size: 11px; color: #8b949e; }
+
+    .window-body {
+      padding: 22px 26px;
+      overflow-y: auto;
+      max-height: calc(100vh - 28px - 40px - 80px);
     }
-    .window-body { padding: 22px 26px; }
 
     /* MARKDOWN STYLES */
     .md-h1 { color: #58a6ff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
@@ -116,13 +118,9 @@
     }
     .meta-label { min-width: 48px; }
 
-    /* BADGES */
     .badge {
-      padding: 2px 9px;
-      border-radius: 4px;
-      font-size: 10px; font-weight: 500;
-      border: 1px solid;
-      white-space: nowrap;
+      padding: 2px 9px; border-radius: 4px;
+      font-size: 10px; font-weight: 500; border: 1px solid;
     }
     .badge.blue   { background: #0d2044; border-color: #1f6feb; color: #58a6ff; }
     .badge.green  { background: #0d2e12; border-color: #238636; color: #3fb950; }
@@ -132,154 +130,318 @@
 
     .skills-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
 
-    .list-item {
-      font-size: 11px; color: #c9d1d9;
-      margin-bottom: 5px; line-height: 1.7;
-    }
+    .list-item { font-size: 11px; color: #c9d1d9; margin-bottom: 5px; line-height: 1.7; }
     .list-item::before { content: "- "; color: #484f58; }
 
     a.inline { color: #58a6ff; text-decoration: none; }
     a.inline:hover { text-decoration: underline; }
 
-    /* CURSOR BLINK */
     .cursor {
-      display: inline-block;
-      width: 7px; height: 13px;
+      display: inline-block; width: 7px; height: 13px;
       background: #58a6ff;
       animation: blink 1s step-end infinite;
-      vertical-align: middle;
-      margin-left: 2px;
+      vertical-align: middle; margin-left: 2px;
     }
     @keyframes blink { 50% { opacity: 0; } }
 
+    /* DESKTOP ICONS */
+    .desktop-icon {
+      position: absolute;
+      top: 16px; left: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.15s;
+      width: 64px;
+    }
+    .desktop-icon:hover { background: rgba(88,166,255,0.08); }
+    .desktop-icon svg { display: block; }
+    .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
+
     /* TASKBAR */
     .taskbar {
-      background: #161b22;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: rgba(22,27,34,0.95);
+      backdrop-filter: blur(8px);
       border-top: 1px solid #21262d;
-      padding: 8px 16px;
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 8px;
-      flex-wrap: wrap;
+      z-index: 1000;
     }
     .taskbar-btn {
-      background: #21262d;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      padding: 6px 14px;
+      background: #21262d; border: 1px solid #30363d;
+      border-radius: 6px; padding: 5px 14px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px; color: #8b949e;
-      cursor: pointer;
-      transition: all 0.15s;
+      cursor: pointer; transition: all 0.15s;
       text-decoration: none;
       display: flex; align-items: center; gap: 6px;
+      border: none; outline: none;
     }
-    .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
-    .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: #0d2e12; }
+    .taskbar-btn:hover { border: 1px solid #58a6ff; color: #58a6ff; }
+    .taskbar-btn.active { border: 1px solid #3fb950; color: #3fb950; background: #0d2e12; }
 
-    /* RESPONSIVE */
-    @media (max-width: 500px) {
-      .sidebar { width: 44px; }
-      .icon-btn { width: 32px; height: 32px; }
-      .window-body { padding: 16px; }
+    /* MINIMIZED STATE */
+    .window.minimized { display: none; }
+
+    /* RESIZE HINT */
+    .resize-hint {
+      position: absolute; bottom: 4px; right: 6px;
+      font-size: 9px; color: #30363d;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
-<div class="os-wrap">
+<!-- MENUBAR -->
+<div class="menubar">
+  <span class="brand">ctOS</span>
+  <a href="https://github.com/pedejesus2" target="_blank">GitHub</a>
+  <span class="right" id="clock"></span>
+</div>
 
-  <!-- MENUBAR -->
-  <div class="menubar">
-    <span class="brand">ctOS</span>
-    <a href="https://github.com/pedejesus2" target="_blank">GitHub</a>
-    <a href="#projects">Projects</a>
+<!-- DESKTOP -->
+<div class="desktop">
+
+  <!-- DESKTOP ICON -->
+  <div class="desktop-icon" onclick="openWindow()" title="about.md">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="1.5">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <line x1="7" y1="8" x2="17" y2="8"/>
+      <line x1="7" y1="12" x2="17" y2="12"/>
+      <line x1="7" y1="16" x2="13" y2="16"/>
+    </svg>
+    <span>about.md</span>
   </div>
 
-  <!-- DESKTOP -->
-  <div class="desktop">
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <a class="icon-btn" href="https://github.com/pedejesus2" target="_blank" title="GitHub">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#8b949e">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-        </svg>
-      </a>
-      <div class="icon-btn" title="Terminal">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2">
-          <polyline points="4 17 10 11 4 5"/>
-          <line x1="12" y1="19" x2="20" y2="19"/>
-        </svg>
+  <!-- DRAGGABLE WINDOW -->
+  <div class="window" id="main-window">
+    <div class="window-bar" id="drag-handle">
+      <div class="dots">
+        <div class="dot r" onclick="closeWindow()" title="Close"></div>
+        <div class="dot y" onclick="minimizeWindow()" title="Minimize"></div>
+        <div class="dot g" onclick="maximizeWindow()" title="Maximize"></div>
       </div>
+      <div class="window-title">about.md ~ Peter De Jesus</div>
+      <div style="width:44px"></div>
     </div>
+    <div class="window-body">
 
-    <!-- MAIN WINDOW -->
-    <div class="main-area">
-      <div class="window">
-        <div class="window-bar">
-          <div class="dot r"></div>
-          <div class="dot y"></div>
-          <div class="dot g"></div>
-          <div class="window-title">about.md ~ Peter De Jesus</div>
-        </div>
-        <div class="window-body">
+      <div class="md-h1"># ABOUT.md <span class="cursor"></span></div>
+      <hr class="divider">
 
-          <div class="md-h1"># ABOUT.md <span class="cursor"></span></div>
-          <hr class="divider">
-
-          <div class="md-h2">## Peter De Jesus</div>
-          <div class="meta-row">
-            <span class="meta-label">Role:</span>
-            <span class="badge blue">HelpDesk</span>
-            <span class="badge purple">Area Metro | Guaynabo</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Focus:</span>
-            <span class="badge orange">Aspiring to be a Systems Administrator and/or Cloud Administrator.</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Side:</span>
-            <span class="badge teal">PC Building</span>
-          </div>
-          <hr class="divider">
-
-          <div class="md-h2">## Skills</div>
-          <div class="skills-grid">
-            <span class="badge blue">Microsoft 365</span>
-            <span class="badge orange">Active Directoy > Access Groups | Password Resets</span>
-            <span class="badge blue">Computer Hardware</span>
-            <span class="badge green">MFA Configuration</span>
-            <span class="badge teal">Ticket Documentation</span>
-            <span class="badge purple">Inventory Management | Monitors, Scanners, Printers, Laptops</span>
-            <span class="badge orange">Windows Deployment through ManageEngine Tools</span>
-            <span class="badge green">End-User Support</span>
-          </div>
-
-          <hr class="divider">
-
-          <div class="md-h2">## Currently</div>
-          <div class="list-item">Studying on WGU, Information Systems B.A</div>
-          <div class="list-item">Experience on HelpDesk</div>
-          <div class="list-item">CompTIA A+ Certified</div>
-          <div class="list-item">Windows 11 VM Lab on process <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com</a></div>
-
-        </div>
+      <div class="md-h2">## Peter De Jesus</div>
+      <div class="meta-row">
+        <span class="meta-label">Role:</span>
+        <span class="badge blue">HelpDesk</span>
+        <span class="badge purple">Area Metro | Guaynabo</span>
       </div>
-    </div>
-  </div>
+      <div class="meta-row">
+        <span class="meta-label">Focus:</span>
+        <span class="badge orange">Aspiring Systems Administrator / Cloud Administrator</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Side:</span>
+        <span class="badge teal">PC Building</span>
+      </div>
 
-  <!-- TASKBAR -->
-  <div class="taskbar">
-    <a class="taskbar-btn active" href="https://github.com/pedejesus2" target="_blank">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-      </svg>
-      pedejesus2
-    </a>
+      <hr class="divider">
+
+      <div class="md-h2">## Skills</div>
+      <div class="skills-grid">
+        <span class="badge blue">Microsoft 365</span>
+        <span class="badge orange">Active Directory</span>
+        <span class="badge orange">Access Groups &amp; Password Resets</span>
+        <span class="badge blue">Computer Hardware</span>
+        <span class="badge green">MFA Configuration</span>
+        <span class="badge teal">Ticket Documentation</span>
+        <span class="badge purple">Inventory Management</span>
+        <span class="badge orange">Windows Deployment · ManageEngine</span>
+        <span class="badge green">End-User Support</span>
+      </div>
+
+      <hr class="divider">
+
+      <div class="md-h2">## Currently</div>
+      <div class="list-item">Studying at WGU — Information Systems B.S.</div>
+      <div class="list-item">HelpDesk experience in enterprise environment</div>
+      <div class="list-item">CompTIA A+ Certified</div>
+      <div class="list-item">Windows 11 VM Lab in progress → <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com/pedejesus2/it-helpdesk-lab</a></div>
+
+    </div>
+    <div class="resize-hint">drag titlebar to move</div>
   </div>
 
 </div>
+
+<!-- TASKBAR -->
+<div class="taskbar">
+  <button class="taskbar-btn active" id="taskbar-win" onclick="toggleWindow()">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2"/>
+      <line x1="7" y1="8" x2="17" y2="8"/>
+      <line x1="7" y1="12" x2="14" y2="12"/>
+    </svg>
+    about.md
+  </button>
+  <a class="taskbar-btn" href="https://github.com/pedejesus2" target="_blank">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+    </svg>
+    pedejesus2
+  </a>
+</div>
+
+<script>
+  // CLOCK
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // WINDOW STATE
+  const win = document.getElementById('main-window');
+  const handle = document.getElementById('drag-handle');
+  let isMaximized = false;
+  let savedPos = null;
+
+  function closeWindow() {
+    win.style.display = 'none';
+    document.getElementById('taskbar-win').classList.remove('active');
+  }
+
+  function openWindow() {
+    win.style.display = '';
+    document.getElementById('taskbar-win').classList.add('active');
+  }
+
+  function minimizeWindow() {
+    win.style.display = 'none';
+    document.getElementById('taskbar-win').classList.remove('active');
+  }
+
+  function toggleWindow() {
+    if (win.style.display === 'none') {
+      openWindow();
+    } else {
+      minimizeWindow();
+    }
+  }
+
+  function maximizeWindow() {
+    if (isMaximized) {
+      // restore
+      if (savedPos) {
+        win.style.left   = savedPos.left;
+        win.style.top    = savedPos.top;
+        win.style.width  = savedPos.width;
+        win.style.transform = savedPos.transform;
+      }
+      win.style.borderRadius = '10px';
+      isMaximized = false;
+    } else {
+      // save current position
+      const rect = win.getBoundingClientRect();
+      savedPos = {
+        left: win.style.left || '',
+        top: win.style.top || '',
+        width: win.style.width || '',
+        transform: win.style.transform || ''
+      };
+      // maximize
+      win.style.left = '0';
+      win.style.top = '28px';
+      win.style.width = '100vw';
+      win.style.transform = 'none';
+      win.style.borderRadius = '0';
+      isMaximized = true;
+    }
+  }
+
+  // DRAG
+  let dragging = false;
+  let startX, startY, startLeft, startTop;
+
+  handle.addEventListener('mousedown', e => {
+    if (isMaximized) return;
+    dragging = true;
+    win.classList.add('dragging');
+
+    const rect = win.getBoundingClientRect();
+    // Switch from transform centering to absolute position
+    win.style.transform = 'none';
+    win.style.left = rect.left + 'px';
+    win.style.top  = rect.top  + 'px';
+
+    startX    = e.clientX;
+    startY    = e.clientY;
+    startLeft = rect.left;
+    startTop  = rect.top;
+
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    let newLeft = startLeft + dx;
+    let newTop  = startTop  + dy;
+
+    // Clamp to viewport
+    const minTop = 28;
+    const maxTop = window.innerHeight - 40 - 60;
+    const maxLeft = window.innerWidth - 80;
+    newLeft = Math.max(-win.offsetWidth + 80, Math.min(maxLeft, newLeft));
+    newTop  = Math.max(minTop, Math.min(maxTop, newTop));
+
+    win.style.left = newLeft + 'px';
+    win.style.top  = newTop  + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    dragging = false;
+    win.classList.remove('dragging');
+  });
+
+  // TOUCH DRAG
+  handle.addEventListener('touchstart', e => {
+    if (isMaximized) return;
+    const touch = e.touches[0];
+    const rect = win.getBoundingClientRect();
+    win.style.transform = 'none';
+    win.style.left = rect.left + 'px';
+    win.style.top  = rect.top  + 'px';
+    startX    = touch.clientX;
+    startY    = touch.clientY;
+    startLeft = rect.left;
+    startTop  = rect.top;
+    dragging  = true;
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    win.style.left = Math.max(0, startLeft + dx) + 'px';
+    win.style.top  = Math.max(28, startTop  + dy) + 'px';
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => { dragging = false; });
+</script>
 
 </body>
 </html>
