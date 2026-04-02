@@ -12,8 +12,6 @@
       background: #020408;
       font-family: 'JetBrains Mono', monospace;
       min-height: 100vh;
-      overflow: hidden;
-      user-select: none;
     }
 
     /* ── AURORA CANVAS ── */
@@ -24,7 +22,6 @@
       pointer-events: none;
     }
 
-    /* subtle dark vignette over aurora */
     body::after {
       content: '';
       position: fixed; inset: 0;
@@ -50,63 +47,163 @@
     .menubar a:hover { color: #58a6ff; }
     .menubar .right { margin-left: auto; font-size: 11px; color: #484f58; }
 
-    /* ── DESKTOP ── */
-    .desktop {
-      position: fixed;
-      top: 28px; bottom: 40px;
-      left: 0; right: 0;
-      z-index: 2;
+    /* ── TASKBAR ── */
+    .taskbar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: rgba(13,17,23,0.75);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(48,54,61,0.6);
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; z-index: 1000;
+    }
+    .taskbar-btn {
+      background: rgba(33,38,45,0.8); border: 1px solid #30363d;
+      border-radius: 6px; padding: 5px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: #8b949e;
+      cursor: pointer; transition: all 0.15s;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      outline: none;
+    }
+    .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+    .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: rgba(13,46,18,0.6); }
+
+    /* ══════════════════════════════
+       DESKTOP (non-mobile)
+    ══════════════════════════════ */
+    @media (min-width: 601px) {
+      body { overflow: hidden; user-select: none; }
+
+      .desktop {
+        position: fixed;
+        top: 28px; bottom: 40px;
+        left: 0; right: 0;
+        z-index: 2;
+      }
+
+      .desktop-icon {
+        position: absolute;
+        top: 16px; left: 16px;
+        display: flex; flex-direction: column;
+        align-items: center; gap: 5px;
+        cursor: pointer; padding: 8px;
+        border-radius: 8px;
+        transition: background 0.15s;
+        width: 64px;
+      }
+      .desktop-icon:hover { background: rgba(88,166,255,0.08); }
+      .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
+
+      .window {
+        position: absolute;
+        top: 60px; left: 50%;
+        transform: translateX(-50%);
+        width: 680px;
+        max-width: calc(100vw - 32px);
+        background: rgba(13,17,23,0.82);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(48,54,61,0.8);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(88,166,255,0.08);
+        animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      }
+
+      @keyframes popIn {
+        from { opacity: 0; transform: translateX(-50%) scale(0.94); }
+        to   { opacity: 1; transform: translateX(-50%) scale(1); }
+      }
+
+      .window.dragging {
+        box-shadow: 0 48px 120px rgba(0,0,0,0.85), 0 0 0 0.5px rgba(88,166,255,0.15);
+      }
+
+      .window-bar {
+        cursor: grab;
+      }
+      .window-bar:active { cursor: grabbing; }
+
+      .window-body {
+        overflow-y: auto;
+        max-height: calc(100vh - 28px - 40px - 90px);
+      }
+
+      /* hide mobile scroll hint on desktop */
+      .scroll-hint { display: none; }
     }
 
-    /* ── DESKTOP ICON ── */
-    .desktop-icon {
-      position: absolute;
-      top: 16px; left: 16px;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 5px;
-      cursor: pointer; padding: 8px;
-      border-radius: 8px;
-      transition: background 0.15s;
-      width: 64px;
-    }
-    .desktop-icon:hover { background: rgba(88,166,255,0.08); }
-    .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
+    /* ══════════════════════════════
+       MOBILE (≤600px)
+    ══════════════════════════════ */
+    @media (max-width: 600px) {
+      body { overflow-y: auto; }
 
-    /* ── WINDOW ── */
-    .window {
-      position: absolute;
-      top: 60px; left: 50%;
-      transform: translateX(-50%);
-      width: 680px;
-      max-width: calc(100vw - 32px);
-      background: rgba(13,17,23,0.82);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(48,54,61,0.8);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(88,166,255,0.08);
-      animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      .desktop {
+        position: relative;
+        z-index: 2;
+        padding: 80px 12px 60px;
+        min-height: 100vh;
+      }
+
+      /* no desktop icon on mobile */
+      .desktop-icon { display: none; }
+
+      .window {
+        position: relative;
+        width: 100%;
+        background: rgba(13,17,23,0.88);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(48,54,61,0.8);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+        animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      }
+
+      @keyframes popIn {
+        from { opacity: 0; transform: scale(0.96); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+
+      .window-bar { cursor: default; }
+
+      .window-body {
+        overflow-y: visible;
+        max-height: none;
+      }
+
+      /* scroll hint pill */
+      .scroll-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 14px;
+        font-size: 10px;
+        color: #484f58;
+        animation: fadeHint 2s ease 1.5s forwards;
+        opacity: 1;
+      }
+      .scroll-hint svg { animation: bounceDown 1.2s ease infinite; }
+
+      @keyframes bounceDown {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(3px); }
+      }
+      @keyframes fadeHint {
+        to { opacity: 0; pointer-events: none; }
+      }
     }
 
-    @keyframes popIn {
-      from { opacity: 0; transform: translateX(-50%) scale(0.94); }
-      to   { opacity: 1; transform: translateX(-50%) scale(1); }
-    }
-
-    .window.dragging {
-      box-shadow: 0 48px 120px rgba(0,0,0,0.85), 0 0 0 0.5px rgba(88,166,255,0.15);
-      transition: box-shadow 0.1s;
-    }
-
-    /* ── TITLE BAR ── */
+    /* ── SHARED WINDOW STYLES ── */
     .window-bar {
       background: rgba(22,27,34,0.7);
       padding: 10px 14px;
       display: flex; align-items: center; gap: 8px;
       border-bottom: 1px solid rgba(48,54,61,0.6);
-      cursor: grab;
     }
-    .window-bar:active { cursor: grabbing; }
 
     .dots { display: flex; gap: 6px; }
     .dot { width: 11px; height: 11px; border-radius: 50%; cursor: pointer; transition: filter 0.15s; }
@@ -117,12 +214,7 @@
 
     .window-title { flex: 1; text-align: center; font-size: 11px; color: #8b949e; }
 
-    /* ── WINDOW BODY ── */
-    .window-body {
-      padding: 22px 26px 16px;
-      overflow-y: auto;
-      max-height: calc(100vh - 28px - 40px - 90px);
-    }
+    .window-body { padding: 22px 26px 16px; }
 
     .md-h1 { color: #58a6ff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
     .md-h2 { color: #3fb950; font-size: 12px; font-weight: 700; margin: 18px 0 10px; }
@@ -160,7 +252,6 @@
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* ── SOCIAL ROW ── */
     .social-row {
       display: flex; gap: 8px; align-items: center;
       padding: 12px 26px 16px;
@@ -176,38 +267,12 @@
       transition: all 0.15s;
     }
     .social-btn:hover { border-color: #0a66c2; color: #58a6ff; background: rgba(10,102,194,0.1); }
-    .social-btn svg { flex-shrink: 0; }
-
-    /* ── TASKBAR ── */
-    .taskbar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: 40px;
-      background: rgba(13,17,23,0.75);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(48,54,61,0.6);
-      display: flex; align-items: center; justify-content: center;
-      gap: 8px; z-index: 1000;
-    }
-    .taskbar-btn {
-      background: rgba(33,38,45,0.8); border: 1px solid #30363d;
-      border-radius: 6px; padding: 5px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; color: #8b949e;
-      cursor: pointer; transition: all 0.15s;
-      text-decoration: none;
-      display: flex; align-items: center; gap: 6px;
-      outline: none;
-    }
-    .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
-    .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: rgba(13,46,18,0.6); }
   </style>
 </head>
 <body>
 
-<!-- AURORA -->
 <canvas id="aurora"></canvas>
 
-<!-- MENUBAR -->
 <div class="menubar">
   <span class="brand">ctOS</span>
   <a href="https://github.com/pedejesus2" target="_blank">GitHub</a>
@@ -215,9 +280,9 @@
   <span class="right" id="clock"></span>
 </div>
 
-<!-- DESKTOP -->
 <div class="desktop">
 
+  <!-- desktop only icon -->
   <div class="desktop-icon" onclick="openWindow()">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="1.5">
       <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -228,7 +293,6 @@
     <span>about.md</span>
   </div>
 
-  <!-- WINDOW -->
   <div class="window" id="main-window">
     <div class="window-bar" id="drag-handle">
       <div class="dots">
@@ -283,7 +347,6 @@
       <div class="list-item">Windows 11 VM Lab in progress → <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com/pedejesus2/it-helpdesk-lab</a></div>
     </div>
 
-    <!-- SOCIAL ROW -->
     <div class="social-row">
       <a class="social-btn" href="https://www.linkedin.com/in/gtstech9/" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="#0a66c2">
@@ -294,9 +357,17 @@
     </div>
   </div>
 
+  <!-- mobile scroll hint — fades out after 3.5s -->
+  <div class="scroll-hint">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#484f58" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+    scroll to see more
+  </div>
+
 </div>
 
-<!-- TASKBAR -->
 <div class="taskbar">
   <button class="taskbar-btn active" id="taskbar-win" onclick="toggleWindow()">
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -334,35 +405,43 @@ const blobs = [
   { x: 0.1, y: 0.6, r: 0.38, hue: 240, speed: 0.00019, phase: 0.8 },
 ];
 
+const stars = Array.from({ length: 120 }, () => ({
+  x: Math.random(), y: Math.random(),
+  r: Math.random() * 1.2 + 0.2,
+  twinkle: Math.random() * Math.PI * 2
+}));
+
 let t = 0;
 function drawAurora(ts) {
   t = ts;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // deep space base
   const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
   bg.addColorStop(0, '#020408');
   bg.addColorStop(1, '#030610');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // stars
-  drawStars();
+  ctx.globalCompositeOperation = 'source-over';
+  for (const s of stars) {
+    const alpha = 0.4 + 0.3 * Math.sin(t * 0.001 + s.twinkle);
+    ctx.fillStyle = `rgba(200,220,255,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
-  // aurora blobs
   for (const b of blobs) {
     const ox = Math.sin(t * b.speed + b.phase) * 0.12;
     const oy = Math.cos(t * b.speed * 0.7 + b.phase) * 0.08;
     const cx = (b.x + ox) * canvas.width;
     const cy = (b.y + oy) * canvas.height;
     const rad = b.r * Math.min(canvas.width, canvas.height);
-
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
     const alpha = 0.13 + 0.05 * Math.sin(t * 0.0003 + b.phase);
     g.addColorStop(0, `hsla(${b.hue}, 90%, 65%, ${alpha})`);
     g.addColorStop(0.5, `hsla(${b.hue + 20}, 80%, 55%, ${alpha * 0.5})`);
     g.addColorStop(1, `hsla(${b.hue + 40}, 70%, 45%, 0)`);
-
     ctx.globalCompositeOperation = 'screen';
     ctx.fillStyle = g;
     ctx.beginPath();
@@ -373,25 +452,6 @@ function drawAurora(ts) {
   ctx.globalCompositeOperation = 'source-over';
   requestAnimationFrame(drawAurora);
 }
-
-// simple star field
-const stars = Array.from({ length: 120 }, () => ({
-  x: Math.random(), y: Math.random(),
-  r: Math.random() * 1.2 + 0.2,
-  twinkle: Math.random() * Math.PI * 2
-}));
-
-function drawStars() {
-  ctx.globalCompositeOperation = 'source-over';
-  for (const s of stars) {
-    const alpha = 0.4 + 0.3 * Math.sin(t * 0.001 + s.twinkle);
-    ctx.fillStyle = `rgba(200,220,255,${alpha})`;
-    ctx.beginPath();
-    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
 requestAnimationFrame(drawAurora);
 
 // ── CLOCK ──
@@ -402,12 +462,14 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-// ── WINDOW CONTROLS ──
+// ── WINDOW CONTROLS (desktop only) ──
+const isMobile = () => window.innerWidth <= 600;
 const win    = document.getElementById('main-window');
 const handle = document.getElementById('drag-handle');
 let isMaximized = false, savedPos = null;
 
 function closeWindow() {
+  if (isMobile()) return;
   win.style.display = 'none';
   document.getElementById('taskbar-win').classList.remove('active');
 }
@@ -416,13 +478,16 @@ function openWindow() {
   document.getElementById('taskbar-win').classList.add('active');
 }
 function minimizeWindow() {
+  if (isMobile()) return;
   win.style.display = 'none';
   document.getElementById('taskbar-win').classList.remove('active');
 }
 function toggleWindow() {
+  if (isMobile()) return;
   win.style.display === 'none' ? openWindow() : minimizeWindow();
 }
 function maximizeWindow() {
+  if (isMobile()) return;
   if (isMaximized) {
     if (savedPos) {
       win.style.left = savedPos.left;
@@ -442,11 +507,11 @@ function maximizeWindow() {
   }
 }
 
-// ── DRAG ──
+// ── DRAG (desktop only) ──
 let dragging = false, startX, startY, startLeft, startTop;
 
 handle.addEventListener('mousedown', e => {
-  if (isMaximized) return;
+  if (isMobile() || isMaximized) return;
   dragging = true;
   win.classList.add('dragging');
   const r = win.getBoundingClientRect();
@@ -472,29 +537,6 @@ document.addEventListener('mouseup', () => {
   dragging = false;
   win.classList.remove('dragging');
 });
-
-handle.addEventListener('touchstart', e => {
-  if (isMaximized) return;
-  const touch = e.touches[0];
-  const r = win.getBoundingClientRect();
-  win.style.transform = 'none';
-  win.style.left = r.left + 'px';
-  win.style.top  = r.top  + 'px';
-  startX = touch.clientX; startY = touch.clientY;
-  startLeft = r.left; startTop = r.top;
-  dragging = true;
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('touchmove', e => {
-  if (!dragging) return;
-  const touch = e.touches[0];
-  win.style.left = Math.max(0, startLeft + touch.clientX - startX) + 'px';
-  win.style.top  = Math.max(28, startTop  + touch.clientY - startY) + 'px';
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('touchend', () => { dragging = false; });
 </script>
 </body>
 </html>
