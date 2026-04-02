@@ -21,7 +21,7 @@
 
     .os-wrap {
       width: 100%;
-      max-width: 760px;
+      max-width: 820px;
       background: #0d0f14;
       border-radius: 12px;
       overflow: hidden;
@@ -35,7 +35,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* MENUBAR */
     .menubar {
       background: #161b22;
       display: flex;
@@ -47,22 +46,25 @@
       border-bottom: 1px solid #21262d;
     }
     .menubar .brand { color: #e6edf3; font-weight: 700; }
-    .menubar a { color: #8b949e; text-decoration: none; transition: color 0.15s; }
-    .menubar a:hover { color: #58a6ff; }
+    .menubar button {
+      color: #8b949e;
+      transition: color 0.15s; cursor: pointer;
+      background: none; border: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; padding: 0;
+    }
+    .menubar button:hover { color: #58a6ff; }
+    .menubar button.active { color: #e6edf3; }
 
-    /* BODY LAYOUT */
-    .desktop { display: flex; min-height: 460px; }
+    .desktop { display: flex; min-height: 500px; }
 
-    /* SIDEBAR */
     .sidebar {
       width: 58px;
       background: #0d1117;
       border-right: 1px solid #21262d;
       padding: 12px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
     }
     .icon-btn {
       width: 38px; height: 38px;
@@ -71,16 +73,12 @@
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       text-decoration: none;
-      transition: border-color 0.15s;
-      cursor: pointer;
+      transition: border-color 0.15s; cursor: pointer;
     }
     .icon-btn:hover { border-color: #58a6ff; }
-    .icon-btn svg { display: block; }
 
-    /* MAIN */
-    .main-area { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .main-area { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
 
-    /* WINDOW */
     .window {
       background: #0d1117;
       border: 1px solid #30363d;
@@ -90,22 +88,16 @@
     .window-bar {
       background: #161b22;
       padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
       border-bottom: 1px solid #21262d;
     }
     .dot { width: 10px; height: 10px; border-radius: 50%; }
     .dot.r { background: #ff5f57; }
     .dot.y { background: #febc2e; }
     .dot.g { background: #28c840; }
-    .window-title {
-      flex: 1; text-align: center;
-      font-size: 11px; color: #8b949e;
-    }
+    .window-title { flex: 1; text-align: center; font-size: 11px; color: #8b949e; }
     .window-body { padding: 22px 26px; }
 
-    /* MARKDOWN STYLES */
     .md-h1 { color: #58a6ff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
     .md-h2 { color: #3fb950; font-size: 12px; font-weight: 700; margin: 18px 0 10px; }
     .divider { border: none; border-top: 1px solid #21262d; margin: 12px 0; }
@@ -116,72 +108,124 @@
     }
     .meta-label { min-width: 48px; }
 
-    /* BADGES */
     .badge {
-      padding: 2px 9px;
-      border-radius: 4px;
-      font-size: 10px; font-weight: 500;
-      border: 1px solid;
-      white-space: nowrap;
+      padding: 2px 9px; border-radius: 4px;
+      font-size: 10px; font-weight: 500; border: 1px solid; white-space: nowrap;
     }
     .badge.blue   { background: #0d2044; border-color: #1f6feb; color: #58a6ff; }
     .badge.green  { background: #0d2e12; border-color: #238636; color: #3fb950; }
     .badge.purple { background: #1f1235; border-color: #6e40c9; color: #bc8cff; }
     .badge.orange { background: #2e1a00; border-color: #e3b341; color: #e3b341; }
     .badge.teal   { background: #0a2e2a; border-color: #1d6b5e; color: #39d353; }
+    .badge.wrap   { white-space: normal; line-height: 1.5; }
 
     .skills-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
 
-    .list-item {
-      font-size: 11px; color: #c9d1d9;
-      margin-bottom: 5px; line-height: 1.7;
-    }
+    .list-item { font-size: 11px; color: #c9d1d9; margin-bottom: 5px; line-height: 1.7; }
     .list-item::before { content: "- "; color: #484f58; }
 
     a.inline { color: #58a6ff; text-decoration: none; }
     a.inline:hover { text-decoration: underline; }
 
-    /* CURSOR BLINK */
     .cursor {
-      display: inline-block;
-      width: 7px; height: 13px;
+      display: inline-block; width: 7px; height: 13px;
       background: #58a6ff;
       animation: blink 1s step-end infinite;
-      vertical-align: middle;
-      margin-left: 2px;
+      vertical-align: middle; margin-left: 2px;
     }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* TASKBAR */
-    .taskbar {
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .api-notice {
       background: #161b22;
-      border-top: 1px solid #21262d;
-      padding: 8px 16px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .taskbar-btn {
-      background: #21262d;
       border: 1px solid #30363d;
       border-radius: 6px;
-      padding: 6px 14px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 11px;
+      color: #8b949e;
+      line-height: 1.8;
+    }
+    .api-notice .key-label { color: #e3b341; }
+    .api-key-row { display: flex; gap: 8px; margin-top: 10px; }
+    .api-key-row input {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: #c9d1d9;
+      outline: none; transition: border-color 0.15s;
+    }
+    .api-key-row input:focus { border-color: #58a6ff; }
+    .api-key-row input::placeholder { color: #484f58; }
+    .btn-fetch {
+      background: #0d2e12; border: 1px solid #238636;
+      border-radius: 6px; padding: 6px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: #3fb950;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .btn-fetch:hover { background: #133d1b; }
+
+    .topic-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .pill {
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; border: 1px solid #30363d;
+      color: #8b949e; cursor: pointer; transition: all 0.15s;
+      background: none; font-family: 'JetBrains Mono', monospace;
+    }
+    .pill:hover { border-color: #58a6ff; color: #58a6ff; }
+    .pill.active { background: #0d2044; border-color: #1f6feb; color: #58a6ff; }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .video-card {
+      background: #161b22; border: 1px solid #30363d;
+      border-radius: 8px; overflow: hidden;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s; display: block;
+    }
+    .video-card:hover { border-color: #58a6ff; transform: translateY(-2px); }
+    .video-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .video-info { padding: 8px 10px; }
+    .video-title {
+      font-size: 10px; color: #c9d1d9; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px;
+    }
+    .video-channel { font-size: 10px; color: #8b949e; }
+
+    .status-msg { font-size: 11px; color: #8b949e; text-align: center; padding: 24px 0; }
+    .status-msg.error { color: #f85149; }
+
+    .taskbar {
+      background: #161b22; border-top: 1px solid #21262d;
+      padding: 8px 16px;
+      display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+    }
+    .taskbar-btn {
+      background: #21262d; border: 1px solid #30363d;
+      border-radius: 6px; padding: 6px 14px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px; color: #8b949e;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: flex; align-items: center; gap: 6px;
+      cursor: pointer; transition: all 0.15s;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
     }
     .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
     .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: #0d2e12; }
 
-    /* RESPONSIVE */
     @media (max-width: 500px) {
       .sidebar { width: 44px; }
       .icon-btn { width: 32px; height: 32px; }
-      .window-body { padding: 16px; }
+      .window-body { padding: 14px; }
+      .video-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -189,87 +233,115 @@
 
 <div class="os-wrap">
 
-  <!-- MENUBAR -->
   <div class="menubar">
     <span class="brand">ctOS</span>
-    <a href="https://github.com/pedejesus2" target="_blank">GitHub</a>
-    <a href="#projects">Projects</a>
+    <button id="tab-about-btn" class="active" onclick="switchTab('about')">About</button>
+    <button id="tab-projects-btn" onclick="switchTab('projects')">Projects</button>
   </div>
 
-  <!-- DESKTOP -->
   <div class="desktop">
-
-    <!-- SIDEBAR -->
     <div class="sidebar">
       <a class="icon-btn" href="https://github.com/pedejesus2" target="_blank" title="GitHub">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#8b949e">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
         </svg>
       </a>
-      <div class="icon-btn" title="Terminal">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2">
-          <polyline points="4 17 10 11 4 5"/>
-          <line x1="12" y1="19" x2="20" y2="19"/>
+      <div class="icon-btn" onclick="switchTab('about')" title="About" id="sb-about" style="border-color:#3fb950;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3fb950" stroke-width="2" id="sb-about-icon">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+      <div class="icon-btn" onclick="switchTab('projects')" title="Projects" id="sb-projects">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2" id="sb-projects-icon">
+          <polygon points="5 3 19 12 5 21 5 3"/>
         </svg>
       </div>
     </div>
 
-    <!-- MAIN WINDOW -->
     <div class="main-area">
       <div class="window">
         <div class="window-bar">
-          <div class="dot r"></div>
-          <div class="dot y"></div>
-          <div class="dot g"></div>
-          <div class="window-title">about.md ~ Peter De Jesus</div>
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <div class="window-title" id="win-title">about.md ~ Peter De Jesus</div>
         </div>
         <div class="window-body">
 
-          <div class="md-h1"># ABOUT.md <span class="cursor"></span></div>
-          <hr class="divider">
+          <!-- ABOUT -->
+          <div id="tab-about" class="tab-content active">
+            <div class="md-h1"># ABOUT.md <span class="cursor"></span></div>
+            <hr class="divider">
 
-          <div class="md-h2">## Peter De Jesus</div>
-          <div class="meta-row">
-            <span class="meta-label">Role:</span>
-            <span class="badge blue">HelpDesk</span>
-            <span class="badge purple">Area Metro | Guaynabo</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Focus:</span>
-            <span class="badge orange">Aspiring to be a Systems Administrator and/or Cloud Administrator.</span>
-          </div>
-          <div class="meta-row">
-            <span class="meta-label">Side:</span>
-            <span class="badge teal">PC Building</span>
-          </div>
-          <hr class="divider">
+            <div class="md-h2">## Peter De Jesus</div>
+            <div class="meta-row">
+              <span class="meta-label">Role:</span>
+              <span class="badge blue">HelpDesk</span>
+              <span class="badge purple">Area Metro | Guaynabo</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Focus:</span>
+              <span class="badge orange wrap">Aspiring Systems Administrator / Cloud Administrator</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Side:</span>
+              <span class="badge teal">PC Building</span>
+            </div>
 
-          <div class="md-h2">## Skills</div>
-          <div class="skills-grid">
-            <span class="badge blue">Microsoft 365</span>
-            <span class="badge orange">Active Directoy > Access Groups | Password Resets</span>
-            <span class="badge blue">Computer Hardware</span>
-            <span class="badge green">MFA Configuration</span>
-            <span class="badge teal">Ticket Documentation</span>
-            <span class="badge purple">Inventory Management | Monitors, Scanners, Printers, Laptops</span>
-            <span class="badge orange">Windows Deployment through ManageEngine Tools</span>
-            <span class="badge green">End-User Support</span>
+            <hr class="divider">
+
+            <div class="md-h2">## Skills</div>
+            <div class="skills-grid">
+              <span class="badge blue">Microsoft 365</span>
+              <span class="badge orange">Active Directory</span>
+              <span class="badge orange">Access Groups &amp; Password Resets</span>
+              <span class="badge blue">Computer Hardware</span>
+              <span class="badge green">MFA Configuration</span>
+              <span class="badge teal">Ticket Documentation</span>
+              <span class="badge purple">Inventory Management</span>
+              <span class="badge orange">Windows Deployment · ManageEngine</span>
+              <span class="badge green">End-User Support</span>
+            </div>
+
+            <hr class="divider">
+
+            <div class="md-h2">## Currently</div>
+            <div class="list-item">Studying at WGU — Information Systems B.S.</div>
+            <div class="list-item">HelpDesk experience in enterprise environment</div>
+            <div class="list-item">CompTIA A+ Certified</div>
+            <div class="list-item">Windows 11 VM Lab in progress → <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com/pedejesus2/it-helpdesk-lab</a></div>
           </div>
 
-          <hr class="divider">
+          <!-- PROJECTS -->
+          <div id="tab-projects" class="tab-content">
+            <div class="md-h1"># PROJECTS.md <span class="cursor"></span></div>
+            <hr class="divider">
+            <div class="md-h2">## Recommended Watches</div>
 
-          <div class="md-h2">## Currently</div>
-          <div class="list-item">Studying on WGU, Information Systems B.A</div>
-          <div class="list-item">Experience on HelpDesk</div>
-          <div class="list-item">CompTIA A+ Certified</div>
-          <div class="list-item">Windows 11 VM Lab on process <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com</a></div>
+            <div class="api-notice">
+              <span class="key-label">// YouTube API key required</span><br>
+              Get a free key → <a class="inline" href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a> → Enable "YouTube Data API v3" → Credentials → API Key
+              <div class="api-key-row">
+                <input type="text" id="api-key-input" placeholder="Paste your YouTube API key here..."/>
+                <button class="btn-fetch" onclick="fetchVideos()">fetch_videos()</button>
+              </div>
+            </div>
+
+            <div class="topic-pills">
+              <button class="pill active" data-topic="PC build guide" onclick="selectTopic(this)">PC builds</button>
+              <button class="pill" data-topic="PC hardware review" onclick="selectTopic(this)">hardware reviews</button>
+              <button class="pill" data-topic="best GPU 2025" onclick="selectTopic(this)">GPUs</button>
+              <button class="pill" data-topic="PC case showcase" onclick="selectTopic(this)">cases</button>
+              <button class="pill" data-topic="CPU benchmark 2025" onclick="selectTopic(this)">CPUs</button>
+            </div>
+
+            <div id="video-status" class="status-msg">// enter your API key and hit fetch_videos()</div>
+            <div id="video-grid" class="video-grid"></div>
+          </div>
 
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TASKBAR -->
   <div class="taskbar">
     <a class="taskbar-btn active" href="https://github.com/pedejesus2" target="_blank">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -280,6 +352,78 @@
   </div>
 
 </div>
+
+<script>
+  let currentTopic = 'PC build guide';
+
+  function switchTab(tab) {
+    ['about','projects'].forEach(t => {
+      document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      document.getElementById('tab-' + t + '-btn').classList.toggle('active', t === tab);
+    });
+    document.getElementById('win-title').textContent =
+      tab === 'about' ? 'about.md ~ Peter De Jesus' : 'projects.md ~ recommended watches';
+    document.getElementById('sb-about').style.borderColor = tab === 'about' ? '#3fb950' : '#30363d';
+    document.getElementById('sb-about-icon').setAttribute('stroke', tab === 'about' ? '#3fb950' : '#8b949e');
+    document.getElementById('sb-projects').style.borderColor = tab === 'projects' ? '#3fb950' : '#30363d';
+    document.getElementById('sb-projects-icon').setAttribute('stroke', tab === 'projects' ? '#3fb950' : '#8b949e');
+  }
+
+  function selectTopic(el) {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    currentTopic = el.dataset.topic;
+  }
+
+  async function fetchVideos() {
+    const key = document.getElementById('api-key-input').value.trim();
+    if (!key) { setStatus('// no API key provided', true); return; }
+
+    setStatus('// fetching...');
+    document.getElementById('video-grid').innerHTML = '';
+
+    const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
+      + encodeURIComponent(currentTopic)
+      + '&type=video&maxResults=6&order=relevance&key=' + key;
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.error) { setStatus('// API error: ' + data.error.message, true); return; }
+      if (!data.items || !data.items.length) { setStatus('// no results found', true); return; }
+
+      setStatus('');
+      const grid = document.getElementById('video-grid');
+      data.items.forEach(item => {
+        const a = document.createElement('a');
+        a.className = 'video-card';
+        a.href = 'https://www.youtube.com/watch?v=' + item.id.videoId;
+        a.target = '_blank';
+        a.innerHTML =
+          '<img src="' + item.snippet.thumbnails.medium.url + '" alt="" loading="lazy"/>' +
+          '<div class="video-info">' +
+            '<div class="video-title">' + item.snippet.title + '</div>' +
+            '<div class="video-channel">' + item.snippet.channelTitle + '</div>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+
+      localStorage.setItem('yt_key', key);
+    } catch(e) {
+      setStatus('// fetch failed: ' + e.message, true);
+    }
+  }
+
+  function setStatus(msg, err) {
+    const el = document.getElementById('video-status');
+    el.textContent = msg;
+    el.className = 'status-msg' + (err ? ' error' : '');
+  }
+
+  const saved = localStorage.getItem('yt_key');
+  if (saved) document.getElementById('api-key-input').value = saved;
+</script>
 
 </body>
 </html>
