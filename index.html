@@ -12,178 +12,37 @@
       background: #020408;
       font-family: 'JetBrains Mono', monospace;
       min-height: 100vh;
-      overflow: hidden;
-      user-select: none;
     }
 
-    /* ── AURORA CANVAS ── */
     #aurora {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
     }
 
-    /* subtle dark vignette over aurora */
     body::after {
       content: '';
       position: fixed; inset: 0;
       background: radial-gradient(ellipse at center, transparent 30%, rgba(2,4,8,0.55) 100%);
-      z-index: 1;
-      pointer-events: none;
+      z-index: 1; pointer-events: none;
     }
 
     /* ── MENUBAR ── */
     .menubar {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 28px;
-      background: rgba(13,17,23,0.75);
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; gap: 20px;
-      padding: 0 16px;
+      position: fixed; top: 0; left: 0; right: 0; height: 28px;
+      background: rgba(13,17,23,0.75); backdrop-filter: blur(12px);
+      display: flex; align-items: center; gap: 20px; padding: 0 16px;
       font-size: 12px; color: #8b949e;
-      border-bottom: 1px solid rgba(48,54,61,0.6);
-      z-index: 1000;
+      border-bottom: 1px solid rgba(48,54,61,0.6); z-index: 1000;
     }
     .menubar .brand { color: #e6edf3; font-weight: 700; }
     .menubar a { color: #8b949e; text-decoration: none; transition: color 0.15s; }
     .menubar a:hover { color: #58a6ff; }
     .menubar .right { margin-left: auto; font-size: 11px; color: #484f58; }
 
-    /* ── DESKTOP ── */
-    .desktop {
-      position: fixed;
-      top: 28px; bottom: 40px;
-      left: 0; right: 0;
-      z-index: 2;
-    }
-
-    /* ── DESKTOP ICON ── */
-    .desktop-icon {
-      position: absolute;
-      top: 16px; left: 16px;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 5px;
-      cursor: pointer; padding: 8px;
-      border-radius: 8px;
-      transition: background 0.15s;
-      width: 64px;
-    }
-    .desktop-icon:hover { background: rgba(88,166,255,0.08); }
-    .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
-
-    /* ── WINDOW ── */
-    .window {
-      position: absolute;
-      top: 60px; left: 50%;
-      transform: translateX(-50%);
-      width: 680px;
-      max-width: calc(100vw - 32px);
-      background: rgba(13,17,23,0.82);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(48,54,61,0.8);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(88,166,255,0.08);
-      animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: translateX(-50%) scale(0.94); }
-      to   { opacity: 1; transform: translateX(-50%) scale(1); }
-    }
-
-    .window.dragging {
-      box-shadow: 0 48px 120px rgba(0,0,0,0.85), 0 0 0 0.5px rgba(88,166,255,0.15);
-      transition: box-shadow 0.1s;
-    }
-
-    /* ── TITLE BAR ── */
-    .window-bar {
-      background: rgba(22,27,34,0.7);
-      padding: 10px 14px;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid rgba(48,54,61,0.6);
-      cursor: grab;
-    }
-    .window-bar:active { cursor: grabbing; }
-
-    .dots { display: flex; gap: 6px; }
-    .dot { width: 11px; height: 11px; border-radius: 50%; cursor: pointer; transition: filter 0.15s; }
-    .dot:hover { filter: brightness(1.3); }
-    .dot.r { background: #ff5f57; }
-    .dot.y { background: #febc2e; }
-    .dot.g { background: #28c840; }
-
-    .window-title { flex: 1; text-align: center; font-size: 11px; color: #8b949e; }
-
-    /* ── WINDOW BODY ── */
-    .window-body {
-      padding: 22px 26px 16px;
-      overflow-y: auto;
-      max-height: calc(100vh - 28px - 40px - 90px);
-    }
-
-    .md-h1 { color: #58a6ff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
-    .md-h2 { color: #3fb950; font-size: 12px; font-weight: 700; margin: 18px 0 10px; }
-    .divider { border: none; border-top: 1px solid rgba(48,54,61,0.7); margin: 12px 0; }
-
-    .meta-row {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 11px; color: #8b949e; margin-bottom: 6px; flex-wrap: wrap;
-    }
-    .meta-label { min-width: 48px; }
-
-    .badge {
-      padding: 2px 9px; border-radius: 4px;
-      font-size: 10px; font-weight: 500; border: 1px solid;
-    }
-    .badge.blue   { background: rgba(13,32,68,0.8);  border-color: #1f6feb; color: #58a6ff; }
-    .badge.green  { background: rgba(13,46,18,0.8);  border-color: #238636; color: #3fb950; }
-    .badge.purple { background: rgba(31,18,53,0.8);  border-color: #6e40c9; color: #bc8cff; }
-    .badge.orange { background: rgba(46,26,0,0.8);   border-color: #e3b341; color: #e3b341; }
-    .badge.teal   { background: rgba(10,46,42,0.8);  border-color: #1d6b5e; color: #39d353; }
-
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
-
-    .list-item { font-size: 11px; color: #c9d1d9; margin-bottom: 5px; line-height: 1.7; }
-    .list-item::before { content: "- "; color: #484f58; }
-
-    a.inline { color: #58a6ff; text-decoration: none; }
-    a.inline:hover { text-decoration: underline; }
-
-    .cursor {
-      display: inline-block; width: 7px; height: 13px;
-      background: #58a6ff;
-      animation: blink 1s step-end infinite;
-      vertical-align: middle; margin-left: 2px;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* ── SOCIAL ROW ── */
-    .social-row {
-      display: flex; gap: 8px; align-items: center;
-      padding: 12px 26px 16px;
-      border-top: 1px solid rgba(48,54,61,0.5);
-    }
-    .social-btn {
-      display: flex; align-items: center; gap: 6px;
-      padding: 4px 10px; border-radius: 5px;
-      border: 1px solid rgba(48,54,61,0.8);
-      background: rgba(22,27,34,0.6);
-      text-decoration: none;
-      font-size: 10px; color: #8b949e;
-      transition: all 0.15s;
-    }
-    .social-btn:hover { border-color: #0a66c2; color: #58a6ff; background: rgba(10,102,194,0.1); }
-    .social-btn svg { flex-shrink: 0; }
-
     /* ── TASKBAR ── */
     .taskbar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      height: 40px;
-      background: rgba(13,17,23,0.75);
-      backdrop-filter: blur(12px);
+      position: fixed; bottom: 0; left: 0; right: 0; height: 40px;
+      background: rgba(13,17,23,0.75); backdrop-filter: blur(12px);
       border-top: 1px solid rgba(48,54,61,0.6);
       display: flex; align-items: center; justify-content: center;
       gap: 8px; z-index: 1000;
@@ -194,20 +53,339 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px; color: #8b949e;
       cursor: pointer; transition: all 0.15s;
-      text-decoration: none;
-      display: flex; align-items: center; gap: 6px;
-      outline: none;
+      text-decoration: none; display: flex; align-items: center; gap: 6px; outline: none;
     }
     .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
     .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: rgba(13,46,18,0.6); }
+
+    /* ══════════════════════════════
+       DESKTOP
+    ══════════════════════════════ */
+    @media (min-width: 601px) {
+      body { overflow: hidden; user-select: none; }
+
+      .desktop {
+        position: fixed; top: 28px; bottom: 40px; left: 0; right: 0; z-index: 2;
+      }
+
+      .desktop-icon {
+        position: absolute; top: 16px; left: 16px;
+        display: flex; flex-direction: column; align-items: center; gap: 5px;
+        cursor: pointer; padding: 8px; border-radius: 8px;
+        transition: background 0.15s; width: 64px;
+      }
+      .desktop-icon:hover { background: rgba(88,166,255,0.08); }
+      .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
+
+      .window {
+        position: absolute; top: 60px; left: 50%;
+        transform: translateX(-50%);
+        width: 680px; max-width: calc(100vw - 32px);
+        background: rgba(13,17,23,0.82); backdrop-filter: blur(18px);
+        border: 1px solid rgba(48,54,61,0.8); border-radius: 10px; overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+        animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      @keyframes popIn {
+        from { opacity: 0; transform: translateX(-50%) scale(0.94); }
+        to   { opacity: 1; transform: translateX(-50%) scale(1); }
+      }
+      .window.dragging { box-shadow: 0 48px 120px rgba(0,0,0,0.85); }
+      .window-bar { cursor: grab; }
+      .window-bar:active { cursor: grabbing; }
+      .window-body { overflow-y: auto; max-height: calc(100vh - 28px - 40px - 90px); }
+      .scroll-hint { display: none; }
+    }
+
+    /* ══════════════════════════════
+       MOBILE
+    ══════════════════════════════ */
+    @media (max-width: 600px) {
+      body { overflow-y: auto; }
+      .desktop { position: relative; z-index: 2; padding: 80px 12px 60px; min-height: 100vh; }
+      .desktop-icon { display: none; }
+      .window {
+        position: relative; width: 100%;
+        background: rgba(13,17,23,0.88); backdrop-filter: blur(18px);
+        border: 1px solid rgba(48,54,61,0.8); border-radius: 10px; overflow: hidden;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+        animation: popInM 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      @keyframes popInM {
+        from { opacity: 0; transform: scale(0.96); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+      .window-bar { cursor: default; }
+      .window-body { overflow-y: visible; max-height: none; }
+      .scroll-hint {
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+        margin-top: 14px; font-size: 10px; color: #484f58;
+        animation: fadeHint 2s ease 1.5s forwards;
+      }
+      .scroll-hint svg { animation: bounceDown 1.2s ease infinite; }
+      @keyframes bounceDown { 0%,100%{transform:translateY(0)} 50%{transform:translateY(3px)} }
+      @keyframes fadeHint { to { opacity: 0; pointer-events: none; } }
+    }
+
+    /* ── SHARED WINDOW ── */
+    .window-bar {
+      background: rgba(22,27,34,0.7); padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid rgba(48,54,61,0.6);
+    }
+    .dots { display: flex; gap: 6px; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; cursor: pointer; transition: filter 0.15s; }
+    .dot:hover { filter: brightness(1.3); }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #febc2e; }
+    .dot.g { background: #28c840; }
+    .window-title { flex: 1; text-align: center; font-size: 11px; color: #8b949e; }
+    .window-body { padding: 22px 26px 16px; }
+
+    .md-h1 { color: #58a6ff; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+    .md-h2 { color: #3fb950; font-size: 12px; font-weight: 700; margin: 18px 0 10px; }
+    .divider { border: none; border-top: 1px solid rgba(48,54,61,0.7); margin: 12px 0; }
+
+    .meta-row { display: flex; align-items: center; gap: 7px; font-size: 11px; color: #8b949e; margin-bottom: 6px; flex-wrap: wrap; }
+    .meta-label { min-width: 48px; }
+
+    .badge { padding: 2px 9px; border-radius: 4px; font-size: 10px; font-weight: 500; border: 1px solid; }
+    .badge.blue   { background: rgba(13,32,68,0.8);  border-color: #1f6feb; color: #58a6ff; }
+    .badge.green  { background: rgba(13,46,18,0.8);  border-color: #238636; color: #3fb950; }
+    .badge.purple { background: rgba(31,18,53,0.8);  border-color: #6e40c9; color: #bc8cff; }
+    .badge.orange { background: rgba(46,26,0,0.8);   border-color: #e3b341; color: #e3b341; }
+    .badge.teal   { background: rgba(10,46,42,0.8);  border-color: #1d6b5e; color: #39d353; }
+
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+    .list-item { font-size: 11px; color: #c9d1d9; margin-bottom: 5px; line-height: 1.7; }
+    .list-item::before { content: "- "; color: #484f58; }
+    a.inline { color: #58a6ff; text-decoration: none; }
+    a.inline:hover { text-decoration: underline; }
+
+    .cursor {
+      display: inline-block; width: 7px; height: 13px;
+      background: #58a6ff; animation: blink 1s step-end infinite;
+      vertical-align: middle; margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .social-row {
+      display: flex; gap: 8px; align-items: center;
+      padding: 12px 26px 16px; border-top: 1px solid rgba(48,54,61,0.5);
+    }
+    .social-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 5px;
+      border: 1px solid rgba(48,54,61,0.8); background: rgba(22,27,34,0.6);
+      text-decoration: none; font-size: 10px; color: #8b949e; transition: all 0.15s;
+    }
+    .social-btn:hover { border-color: #0a66c2; color: #58a6ff; background: rgba(10,102,194,0.1); }
+
+    /* ── OPEN TICKET DESKTOP BUTTON ── */
+    .ticket-launcher {
+      position: absolute;
+      bottom: 24px; right: 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      cursor: pointer; z-index: 10;
+      animation: floatBtn 3s ease-in-out infinite;
+    }
+    @keyframes floatBtn {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+    .ticket-launcher-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(22,27,34,0.85); backdrop-filter: blur(10px);
+      border: 1px solid rgba(88,166,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .ticket-launcher:hover .ticket-launcher-icon {
+      border-color: rgba(88,166,255,0.6);
+      background: rgba(30,40,60,0.9);
+      box-shadow: 0 8px 32px rgba(88,166,255,0.15);
+    }
+    .ticket-launcher span { font-size: 9px; color: #484f58; text-align: center; }
+    .ticket-launcher:hover span { color: #8b949e; }
+
+    /* pulse ring */
+    .ticket-launcher-icon::before {
+      content: '';
+      position: absolute; width: 52px; height: 52px;
+      border-radius: 12px; border: 1px solid rgba(88,166,255,0.3);
+      animation: pulseRing 2s ease-out infinite;
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ── TICKET WINDOW ── */
+    .ticket-window {
+      position: absolute;
+      bottom: 100px; right: 24px;
+      width: 380px; max-width: calc(100vw - 32px);
+      background: #f0f2f5;
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 20;
+      animation: slideUp 0.25s cubic-bezier(0.34,1.4,0.64,1);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .ticket-window.open { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* corporate header */
+    .ticket-header {
+      background: #003366;
+      padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+      cursor: grab;
+    }
+    .ticket-header:active { cursor: grabbing; }
+    .corp-logo {
+      width: 28px; height: 28px; border-radius: 4px;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .corp-logo svg { display: block; }
+    .ticket-header-text { flex: 1; }
+    .ticket-header-text .corp-name { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+    .ticket-header-text .corp-sub  { font-size: 9px; color: rgba(255,255,255,0.55); margin-top: 1px; }
+    .ticket-close {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; flex-shrink: 0;
+    }
+    .ticket-close:hover { background: rgba(255,255,255,0.3); }
+
+    /* nav bar */
+    .ticket-nav {
+      background: #003f80;
+      display: flex; gap: 0; padding: 0 14px;
+      border-bottom: 2px solid #e8ecf0;
+    }
+    .ticket-nav-item {
+      padding: 7px 12px; font-size: 10px; color: rgba(255,255,255,0.6);
+      cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+    .ticket-nav-item.active { color: #fff; border-bottom-color: #5ba3f5; }
+    .ticket-nav-item:hover { color: #fff; }
+
+    /* body */
+    .ticket-body { padding: 16px; background: #f0f2f5; }
+
+    /* breadcrumb */
+    .breadcrumb { font-size: 9px; color: #888; margin-bottom: 12px; }
+    .breadcrumb span { color: #003366; }
+
+    /* form */
+    .ticket-form-title {
+      font-size: 13px; font-weight: 700; color: #1a1a2e;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid #d0d5dd;
+    }
+
+    .form-row { margin-bottom: 10px; }
+    .form-label { font-size: 10px; color: #444; font-weight: 600; margin-bottom: 3px; display: block; }
+    .form-label .req { color: #c0392b; margin-left: 2px; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 6px 9px; border-radius: 4px;
+      border: 1px solid #ccc; font-size: 11px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff; color: #222; outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #003366; }
+    .form-textarea { resize: vertical; min-height: 60px; }
+
+    .form-row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+    .priority-row { display: flex; gap: 6px; margin-top: 3px; }
+    .priority-btn {
+      flex: 1; padding: 4px; border-radius: 4px; border: 1px solid #ccc;
+      font-size: 9px; font-weight: 600; cursor: pointer; text-align: center;
+      background: #fff; transition: all 0.15s;
+    }
+    .priority-btn:hover { border-color: #003366; }
+    .priority-btn.low.sel    { background: #e6f4ea; border-color: #2e7d32; color: #2e7d32; }
+    .priority-btn.med.sel    { background: #fff8e1; border-color: #f57c00; color: #f57c00; }
+    .priority-btn.high.sel   { background: #fce4ec; border-color: #c62828; color: #c62828; }
+    .priority-btn.crit.sel   { background: #3d0000; border-color: #8b0000; color: #ff5252; }
+
+    .submit-row { display: flex; gap: 8px; margin-top: 14px; }
+    .btn-submit {
+      flex: 1; padding: 8px; border-radius: 4px; border: none;
+      background: #003366; color: #fff; font-size: 11px; font-weight: 700;
+      cursor: pointer; transition: background 0.15s;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .btn-submit:hover { background: #004a99; }
+    .btn-cancel {
+      padding: 8px 14px; border-radius: 4px; border: 1px solid #ccc;
+      background: #fff; color: #555; font-size: 11px; cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      transition: all 0.15s;
+    }
+    .btn-cancel:hover { border-color: #999; }
+
+    /* confirmation screen */
+    .ticket-confirm {
+      display: none; padding: 24px 16px; text-align: center; background: #f0f2f5;
+    }
+    .ticket-confirm.show { display: block; }
+    .confirm-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #e6f4ea; margin: 0 auto 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ticket-num {
+      font-size: 20px; font-weight: 700; color: #003366;
+      font-family: 'JetBrains Mono', monospace; margin: 8px 0 4px;
+    }
+    .ticket-status-badge {
+      display: inline-block; padding: 2px 10px; border-radius: 20px;
+      background: #fff8e1; border: 1px solid #f57c00;
+      font-size: 9px; font-weight: 700; color: #f57c00;
+      letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .confirm-msg { font-size: 11px; color: #555; line-height: 1.6; margin-bottom: 4px; }
+    .confirm-eta { font-size: 10px; color: #888; font-style: italic; }
+    .confirm-note {
+      margin-top: 14px; padding: 10px 12px; border-radius: 6px;
+      background: #fff3cd; border: 1px solid #ffc107;
+      font-size: 10px; color: #664d03; text-align: left; line-height: 1.6;
+    }
+    .btn-new-ticket {
+      margin-top: 14px; padding: 8px 20px; border-radius: 4px; border: none;
+      background: #003366; color: #fff; font-size: 11px; font-weight: 700;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .btn-new-ticket:hover { background: #004a99; }
+
+    /* mobile ticket launcher */
+    @media (max-width: 600px) {
+      .ticket-launcher {
+        position: fixed; bottom: 56px; right: 16px;
+      }
+      .ticket-window {
+        position: fixed; bottom: 120px; right: 8px; left: 8px; width: auto;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- AURORA -->
 <canvas id="aurora"></canvas>
 
-<!-- MENUBAR -->
 <div class="menubar">
   <span class="brand">ctOS</span>
   <a href="https://github.com/pedejesus2" target="_blank">GitHub</a>
@@ -215,7 +393,6 @@
   <span class="right" id="clock"></span>
 </div>
 
-<!-- DESKTOP -->
 <div class="desktop">
 
   <div class="desktop-icon" onclick="openWindow()">
@@ -228,7 +405,7 @@
     <span>about.md</span>
   </div>
 
-  <!-- WINDOW -->
+  <!-- ABOUT WINDOW -->
   <div class="window" id="main-window">
     <div class="window-bar" id="drag-handle">
       <div class="dots">
@@ -239,11 +416,9 @@
       <div class="window-title">about.md ~ Peter De Jesus</div>
       <div style="width:44px"></div>
     </div>
-
     <div class="window-body">
       <div class="md-h1"># ABOUT.md <span class="cursor"></span></div>
       <hr class="divider">
-
       <div class="md-h2">## Peter De Jesus</div>
       <div class="meta-row">
         <span class="meta-label">Role:</span>
@@ -258,9 +433,7 @@
         <span class="meta-label">Side:</span>
         <span class="badge teal">PC Building</span>
       </div>
-
       <hr class="divider">
-
       <div class="md-h2">## Skills</div>
       <div class="skills-grid">
         <span class="badge blue">Microsoft 365</span>
@@ -273,17 +446,13 @@
         <span class="badge orange">Windows Deployment · ManageEngine</span>
         <span class="badge green">End-User Support</span>
       </div>
-
       <hr class="divider">
-
       <div class="md-h2">## Currently</div>
       <div class="list-item">Studying at WGU — Information Systems B.S.</div>
       <div class="list-item">HelpDesk experience in enterprise environment</div>
       <div class="list-item">CompTIA A+ Certified</div>
       <div class="list-item">Windows 11 VM Lab in progress → <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com/pedejesus2/it-helpdesk-lab</a></div>
     </div>
-
-    <!-- SOCIAL ROW -->
     <div class="social-row">
       <a class="social-btn" href="https://www.linkedin.com/in/gtstech9/" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="#0a66c2">
@@ -292,6 +461,150 @@
         linkedin.com/in/gtstech9
       </a>
     </div>
+  </div>
+
+  <!-- TICKET LAUNCHER BUTTON -->
+  <div class="ticket-launcher" onclick="toggleTicket()">
+    <div class="ticket-launcher-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="1.8">
+        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+        <rect x="9" y="3" width="6" height="4" rx="1"/>
+        <line x1="9" y1="12" x2="15" y2="12"/>
+        <line x1="9" y1="16" x2="12" y2="16"/>
+      </svg>
+    </div>
+    <span>open ticket</span>
+  </div>
+
+  <!-- TICKET WINDOW -->
+  <div class="ticket-window" id="ticket-window">
+    <!-- corp header -->
+    <div class="ticket-header" id="ticket-drag">
+      <div class="corp-logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#003366">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4" stroke="#003366" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="ticket-header-text">
+        <div class="corp-name">ACME CORP · IT SERVICE DESK</div>
+        <div class="corp-sub">Powered by ServiceNow™ · v8.4.1</div>
+      </div>
+      <button class="ticket-close" onclick="closeTicket()">✕</button>
+    </div>
+
+    <!-- nav -->
+    <div class="ticket-nav">
+      <div class="ticket-nav-item active">New Ticket</div>
+      <div class="ticket-nav-item">My Tickets (∞)</div>
+      <div class="ticket-nav-item">KB Articles</div>
+    </div>
+
+    <!-- form -->
+    <div class="ticket-body" id="ticket-form-body">
+      <div class="breadcrumb">Home &gt; IT Support &gt; <span>Submit New Request</span></div>
+      <div class="ticket-form-title">📋 Submit a Support Request</div>
+
+      <div class="form-row">
+        <label class="form-label">Full Name <span class="req">*</span></label>
+        <input class="form-input" type="text" id="f-name" placeholder="e.g. John Smith"/>
+      </div>
+
+      <div class="form-row-split">
+        <div>
+          <label class="form-label">Employee ID <span class="req">*</span></label>
+          <input class="form-input" type="text" id="f-eid" placeholder="EMP-XXXXX"/>
+        </div>
+        <div>
+          <label class="form-label">Department</label>
+          <select class="form-select" id="f-dept">
+            <option>-- Select --</option>
+            <option>Accounting</option>
+            <option>HR</option>
+            <option>Legal</option>
+            <option>Marketing</option>
+            <option>Operations</option>
+            <option>Sales</option>
+            <option>C-Suite</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">Issue Category <span class="req">*</span></label>
+        <select class="form-select" id="f-cat">
+          <option>-- Select Category --</option>
+          <option>Password Reset (again)</option>
+          <option>Printer won't print</option>
+          <option>Internet is slow (it's always slow)</option>
+          <option>My computer is doing a thing</option>
+          <option>Outlook keeps crashing</option>
+          <option>Teams won't load in a Teams meeting</option>
+          <option>Someone spilled coffee on keyboard</option>
+          <option>The any key is missing</option>
+          <option>Monitor is dark (it's unplugged)</option>
+          <option>Other (it's complicated)</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">Description <span class="req">*</span></label>
+        <textarea class="form-textarea" id="f-desc" placeholder="Please describe the issue in detail. 'It doesn't work' is not a description."></textarea>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">Priority</label>
+        <div class="priority-row">
+          <div class="priority-btn low" onclick="setPriority(this)">🟢 Low</div>
+          <div class="priority-btn med" onclick="setPriority(this)">🟡 Medium</div>
+          <div class="priority-btn high" onclick="setPriority(this)">🔴 High</div>
+          <div class="priority-btn crit" onclick="setPriority(this)">💀 Critical</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label">Have you tried turning it off and on again?</label>
+        <select class="form-select" id="f-reboot">
+          <option>-- Please select --</option>
+          <option>Yes, multiple times</option>
+          <option>No, I was afraid</option>
+          <option>What does that mean?</option>
+          <option>I unplugged the whole building</option>
+        </select>
+      </div>
+
+      <div class="submit-row">
+        <button class="btn-submit" onclick="submitTicket()">Submit Ticket</button>
+        <button class="btn-cancel" onclick="closeTicket()">Cancel</button>
+      </div>
+    </div>
+
+    <!-- confirmation -->
+    <div class="ticket-confirm" id="ticket-confirm">
+      <div class="confirm-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:#1a1a2e;margin-bottom:4px;">Ticket Submitted Successfully</div>
+      <div class="ticket-num" id="ticket-num">#INC-000000</div>
+      <div class="ticket-status-badge">⏳ PENDING ASSIGNMENT</div>
+      <div class="confirm-msg">Your request has been received and added to the queue.<br>An agent will review your ticket shortly.</div>
+      <div class="confirm-eta" id="confirm-eta"></div>
+      <div class="confirm-note">
+        ⚠️ <strong>Reminder:</strong> Before your appointment, please verify the device is plugged in, reboot it, and check if the issue still exists. 9 out of 10 tickets are resolved this way.<br><br>
+        📧 A confirmation has been sent to your email. Please check your spam folder because it's definitely in there.
+      </div>
+      <button class="btn-new-ticket" onclick="resetTicket()">Submit Another Ticket</button>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#484f58" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+    scroll to see more
   </div>
 
 </div>
@@ -306,6 +619,13 @@
     </svg>
     about.md
   </button>
+  <button class="taskbar-btn" id="taskbar-ticket" onclick="toggleTicket()">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+      <rect x="9" y="3" width="6" height="4" rx="1"/>
+    </svg>
+    open ticket
+  </button>
   <a class="taskbar-btn" href="https://github.com/pedejesus2" target="_blank">
     <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
@@ -318,183 +638,175 @@
 // ── AURORA ──
 const canvas = document.getElementById('aurora');
 const ctx = canvas.getContext('2d');
-
-function resize() {
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
 
 const blobs = [
-  { x: 0.2, y: 0.3, r: 0.55, hue: 160, speed: 0.00018, phase: 0 },
-  { x: 0.6, y: 0.2, r: 0.50, hue: 200, speed: 0.00013, phase: 1.2 },
-  { x: 0.8, y: 0.5, r: 0.45, hue: 270, speed: 0.00021, phase: 2.4 },
-  { x: 0.4, y: 0.7, r: 0.40, hue: 180, speed: 0.00016, phase: 3.6 },
-  { x: 0.1, y: 0.6, r: 0.38, hue: 240, speed: 0.00019, phase: 0.8 },
+  { x:0.2,y:0.3,r:0.55,hue:160,speed:0.00018,phase:0 },
+  { x:0.6,y:0.2,r:0.50,hue:200,speed:0.00013,phase:1.2 },
+  { x:0.8,y:0.5,r:0.45,hue:270,speed:0.00021,phase:2.4 },
+  { x:0.4,y:0.7,r:0.40,hue:180,speed:0.00016,phase:3.6 },
+  { x:0.1,y:0.6,r:0.38,hue:240,speed:0.00019,phase:0.8 },
 ];
-
-let t = 0;
-function drawAurora(ts) {
-  t = ts;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // deep space base
-  const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  bg.addColorStop(0, '#020408');
-  bg.addColorStop(1, '#030610');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // stars
-  drawStars();
-
-  // aurora blobs
-  for (const b of blobs) {
-    const ox = Math.sin(t * b.speed + b.phase) * 0.12;
-    const oy = Math.cos(t * b.speed * 0.7 + b.phase) * 0.08;
-    const cx = (b.x + ox) * canvas.width;
-    const cy = (b.y + oy) * canvas.height;
-    const rad = b.r * Math.min(canvas.width, canvas.height);
-
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-    const alpha = 0.13 + 0.05 * Math.sin(t * 0.0003 + b.phase);
-    g.addColorStop(0, `hsla(${b.hue}, 90%, 65%, ${alpha})`);
-    g.addColorStop(0.5, `hsla(${b.hue + 20}, 80%, 55%, ${alpha * 0.5})`);
-    g.addColorStop(1, `hsla(${b.hue + 40}, 70%, 45%, 0)`);
-
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.ellipse(cx, cy, rad, rad * 0.45, t * b.speed * 0.3, 0, Math.PI * 2);
-    ctx.fill();
+const stars = Array.from({length:120},()=>({
+  x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.2,twinkle:Math.random()*Math.PI*2
+}));
+let t=0;
+function drawAurora(ts){
+  t=ts;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const bg=ctx.createLinearGradient(0,0,0,canvas.height);
+  bg.addColorStop(0,'#020408'); bg.addColorStop(1,'#030610');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.globalCompositeOperation='source-over';
+  for(const s of stars){
+    const a=0.4+0.3*Math.sin(t*0.001+s.twinkle);
+    ctx.fillStyle=`rgba(200,220,255,${a})`;
+    ctx.beginPath(); ctx.arc(s.x*canvas.width,s.y*canvas.height,s.r,0,Math.PI*2); ctx.fill();
   }
-
-  ctx.globalCompositeOperation = 'source-over';
+  for(const b of blobs){
+    const ox=Math.sin(t*b.speed+b.phase)*0.12;
+    const oy=Math.cos(t*b.speed*0.7+b.phase)*0.08;
+    const cx=(b.x+ox)*canvas.width, cy=(b.y+oy)*canvas.height;
+    const rad=b.r*Math.min(canvas.width,canvas.height);
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+    const alpha=0.13+0.05*Math.sin(t*0.0003+b.phase);
+    g.addColorStop(0,`hsla(${b.hue},90%,65%,${alpha})`);
+    g.addColorStop(0.5,`hsla(${b.hue+20},80%,55%,${alpha*0.5})`);
+    g.addColorStop(1,`hsla(${b.hue+40},70%,45%,0)`);
+    ctx.globalCompositeOperation='screen';
+    ctx.fillStyle=g;
+    ctx.beginPath(); ctx.ellipse(cx,cy,rad,rad*0.45,t*b.speed*0.3,0,Math.PI*2); ctx.fill();
+  }
+  ctx.globalCompositeOperation='source-over';
   requestAnimationFrame(drawAurora);
 }
-
-// simple star field
-const stars = Array.from({ length: 120 }, () => ({
-  x: Math.random(), y: Math.random(),
-  r: Math.random() * 1.2 + 0.2,
-  twinkle: Math.random() * Math.PI * 2
-}));
-
-function drawStars() {
-  ctx.globalCompositeOperation = 'source-over';
-  for (const s of stars) {
-    const alpha = 0.4 + 0.3 * Math.sin(t * 0.001 + s.twinkle);
-    ctx.fillStyle = `rgba(200,220,255,${alpha})`;
-    ctx.beginPath();
-    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
 requestAnimationFrame(drawAurora);
 
 // ── CLOCK ──
-function updateClock() {
-  document.getElementById('clock').textContent =
-    new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+function updateClock(){
+  document.getElementById('clock').textContent=
+    new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 }
-updateClock();
-setInterval(updateClock, 1000);
+updateClock(); setInterval(updateClock,1000);
 
-// ── WINDOW CONTROLS ──
-const win    = document.getElementById('main-window');
-const handle = document.getElementById('drag-handle');
-let isMaximized = false, savedPos = null;
+// ── ABOUT WINDOW ──
+const isMobile=()=>window.innerWidth<=600;
+const win=document.getElementById('main-window');
+const handle=document.getElementById('drag-handle');
+let isMaximized=false, savedPos=null;
 
-function closeWindow() {
-  win.style.display = 'none';
-  document.getElementById('taskbar-win').classList.remove('active');
-}
-function openWindow() {
-  win.style.display = '';
-  document.getElementById('taskbar-win').classList.add('active');
-}
-function minimizeWindow() {
-  win.style.display = 'none';
-  document.getElementById('taskbar-win').classList.remove('active');
-}
-function toggleWindow() {
-  win.style.display === 'none' ? openWindow() : minimizeWindow();
-}
-function maximizeWindow() {
-  if (isMaximized) {
-    if (savedPos) {
-      win.style.left = savedPos.left;
-      win.style.top  = savedPos.top;
-      win.style.width = savedPos.width;
-      win.style.transform = savedPos.transform;
-    }
-    win.style.borderRadius = '10px';
-    isMaximized = false;
+function closeWindow(){ if(isMobile())return; win.style.display='none'; document.getElementById('taskbar-win').classList.remove('active'); }
+function openWindow(){ win.style.display=''; document.getElementById('taskbar-win').classList.add('active'); }
+function minimizeWindow(){ if(isMobile())return; win.style.display='none'; document.getElementById('taskbar-win').classList.remove('active'); }
+function toggleWindow(){ if(isMobile())return; win.style.display==='none'?openWindow():minimizeWindow(); }
+function maximizeWindow(){
+  if(isMobile())return;
+  if(isMaximized){
+    if(savedPos){win.style.left=savedPos.left;win.style.top=savedPos.top;win.style.width=savedPos.width;win.style.transform=savedPos.transform;}
+    win.style.borderRadius='10px'; isMaximized=false;
   } else {
-    const r = win.getBoundingClientRect();
-    savedPos = { left: win.style.left, top: win.style.top, width: win.style.width, transform: win.style.transform };
-    win.style.left = '0'; win.style.top = '28px';
-    win.style.width = '100vw'; win.style.transform = 'none';
-    win.style.borderRadius = '0';
-    isMaximized = true;
+    const r=win.getBoundingClientRect();
+    savedPos={left:win.style.left,top:win.style.top,width:win.style.width,transform:win.style.transform};
+    win.style.left='0';win.style.top='28px';win.style.width='100vw';win.style.transform='none';win.style.borderRadius='0';
+    isMaximized=true;
   }
 }
 
-// ── DRAG ──
-let dragging = false, startX, startY, startLeft, startTop;
+let dragging=false,startX,startY,startLeft,startTop;
+handle.addEventListener('mousedown',e=>{
+  if(isMobile()||isMaximized)return;
+  dragging=true; win.classList.add('dragging');
+  const r=win.getBoundingClientRect();
+  win.style.transform='none'; win.style.left=r.left+'px'; win.style.top=r.top+'px';
+  startX=e.clientX;startY=e.clientY;startLeft=r.left;startTop=r.top; e.preventDefault();
+});
+document.addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  let nl=startLeft+(e.clientX-startX), nt=startTop+(e.clientY-startY);
+  nl=Math.max(-win.offsetWidth+80,Math.min(window.innerWidth-80,nl));
+  nt=Math.max(28,Math.min(window.innerHeight-80,nt));
+  win.style.left=nl+'px'; win.style.top=nt+'px';
+});
+document.addEventListener('mouseup',()=>{ dragging=false; win.classList.remove('dragging'); });
 
-handle.addEventListener('mousedown', e => {
-  if (isMaximized) return;
-  dragging = true;
-  win.classList.add('dragging');
-  const r = win.getBoundingClientRect();
-  win.style.transform = 'none';
-  win.style.left = r.left + 'px';
-  win.style.top  = r.top  + 'px';
-  startX = e.clientX; startY = e.clientY;
-  startLeft = r.left;  startTop  = r.top;
+// ── TICKET WINDOW ──
+const ticketWin = document.getElementById('ticket-window');
+const ticketBtn = document.getElementById('taskbar-ticket');
+
+function toggleTicket(){
+  const isOpen = ticketWin.classList.contains('open');
+  if(isOpen){ closeTicket(); } else { openTicket(); }
+}
+function openTicket(){
+  ticketWin.classList.add('open');
+  ticketBtn.classList.add('active');
+}
+function closeTicket(){
+  ticketWin.classList.remove('open');
+  ticketBtn.classList.remove('active');
+}
+
+// priority selection
+function setPriority(el){
+  document.querySelectorAll('.priority-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+// submit ticket
+function submitTicket(){
+  const name = document.getElementById('f-name').value.trim();
+  const cat  = document.getElementById('f-cat').value;
+  const desc = document.getElementById('f-desc').value.trim();
+  if(!name){ alert('Please enter your name.'); return; }
+  if(cat === '-- Select Category --'){ alert('Please select an issue category.'); return; }
+  if(!desc){ alert('Please describe the issue.'); return; }
+
+  // generate fake ticket number
+  const num = 'INC-' + String(Math.floor(Math.random()*900000+100000));
+  document.getElementById('ticket-num').textContent = '#' + num;
+
+  // fake ETA
+  const days = Math.floor(Math.random()*4)+2;
+  document.getElementById('confirm-eta').textContent =
+    `Estimated response time: ${days}–${days+2} business days (we're very busy).`;
+
+  document.getElementById('ticket-form-body').style.display = 'none';
+  document.getElementById('ticket-confirm').classList.add('show');
+}
+
+function resetTicket(){
+  document.getElementById('f-name').value='';
+  document.getElementById('f-eid').value='';
+  document.getElementById('f-dept').selectedIndex=0;
+  document.getElementById('f-cat').selectedIndex=0;
+  document.getElementById('f-desc').value='';
+  document.getElementById('f-reboot').selectedIndex=0;
+  document.querySelectorAll('.priority-btn').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('ticket-form-body').style.display='block';
+  document.getElementById('ticket-confirm').classList.remove('show');
+}
+
+// draggable ticket window
+const ticketDrag = document.getElementById('ticket-drag');
+let tDragging=false, tStartX, tStartY, tStartL, tStartT;
+ticketDrag.addEventListener('mousedown',e=>{
+  if(isMobile())return;
+  tDragging=true;
+  const r=ticketWin.getBoundingClientRect();
+  ticketWin.style.bottom='auto';
+  ticketWin.style.right='auto';
+  ticketWin.style.left=r.left+'px';
+  ticketWin.style.top=r.top+'px';
+  tStartX=e.clientX;tStartY=e.clientY;tStartL=r.left;tStartT=r.top;
   e.preventDefault();
 });
-
-document.addEventListener('mousemove', e => {
-  if (!dragging) return;
-  let nl = startLeft + (e.clientX - startX);
-  let nt = startTop  + (e.clientY - startY);
-  nl = Math.max(-win.offsetWidth + 80, Math.min(window.innerWidth - 80, nl));
-  nt = Math.max(28, Math.min(window.innerHeight - 80, nt));
-  win.style.left = nl + 'px';
-  win.style.top  = nt + 'px';
+document.addEventListener('mousemove',e=>{
+  if(!tDragging)return;
+  ticketWin.style.left=Math.max(0,tStartL+(e.clientX-tStartX))+'px';
+  ticketWin.style.top=Math.max(28,tStartT+(e.clientY-tStartY))+'px';
 });
-
-document.addEventListener('mouseup', () => {
-  dragging = false;
-  win.classList.remove('dragging');
-});
-
-handle.addEventListener('touchstart', e => {
-  if (isMaximized) return;
-  const touch = e.touches[0];
-  const r = win.getBoundingClientRect();
-  win.style.transform = 'none';
-  win.style.left = r.left + 'px';
-  win.style.top  = r.top  + 'px';
-  startX = touch.clientX; startY = touch.clientY;
-  startLeft = r.left; startTop = r.top;
-  dragging = true;
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('touchmove', e => {
-  if (!dragging) return;
-  const touch = e.touches[0];
-  win.style.left = Math.max(0, startLeft + touch.clientX - startX) + 'px';
-  win.style.top  = Math.max(28, startTop  + touch.clientY - startY) + 'px';
-  e.preventDefault();
-}, { passive: false });
-
-document.addEventListener('touchend', () => { dragging = false; });
+document.addEventListener('mouseup',()=>{ tDragging=false; });
 </script>
 </body>
 </html>
