@@ -26,7 +26,6 @@
       z-index: 1; pointer-events: none;
     }
 
-    /* ── MENUBAR ── */
     .menubar {
       position: fixed; top: 0; left: 0; right: 0; height: 28px;
       background: rgba(13,17,23,0.75); backdrop-filter: blur(12px);
@@ -39,7 +38,6 @@
     .menubar a:hover { color: #58a6ff; }
     .menubar .right { margin-left: auto; font-size: 11px; color: #484f58; }
 
-    /* ── TASKBAR ── */
     .taskbar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 40px;
       background: rgba(13,17,23,0.75); backdrop-filter: blur(12px);
@@ -58,16 +56,9 @@
     .taskbar-btn:hover { border-color: #58a6ff; color: #58a6ff; }
     .taskbar-btn.active { border-color: #3fb950; color: #3fb950; background: rgba(13,46,18,0.6); }
 
-    /* ══════════════════════════════
-       DESKTOP
-    ══════════════════════════════ */
     @media (min-width: 601px) {
       body { overflow: hidden; user-select: none; }
-
-      .desktop {
-        position: fixed; top: 28px; bottom: 40px; left: 0; right: 0; z-index: 2;
-      }
-
+      .desktop { position: fixed; top: 28px; bottom: 40px; left: 0; right: 0; z-index: 2; }
       .desktop-icon {
         position: absolute; top: 16px; left: 16px;
         display: flex; flex-direction: column; align-items: center; gap: 5px;
@@ -76,7 +67,6 @@
       }
       .desktop-icon:hover { background: rgba(88,166,255,0.08); }
       .desktop-icon span { font-size: 10px; color: #8b949e; text-align: center; }
-
       .window {
         position: absolute; top: 60px; left: 50%;
         transform: translateX(-50%);
@@ -97,9 +87,6 @@
       .scroll-hint { display: none; }
     }
 
-    /* ══════════════════════════════
-       MOBILE
-    ══════════════════════════════ */
     @media (max-width: 600px) {
       body { overflow-y: auto; }
       .desktop { position: relative; z-index: 2; padding: 80px 12px 60px; min-height: 100vh; }
@@ -127,7 +114,6 @@
       @keyframes fadeHint { to { opacity: 0; pointer-events: none; } }
     }
 
-    /* ── SHARED WINDOW ── */
     .window-bar {
       background: rgba(22,27,34,0.7); padding: 10px 14px;
       display: flex; align-items: center; gap: 8px;
@@ -181,18 +167,13 @@
     }
     .social-btn:hover { border-color: #0a66c2; color: #58a6ff; background: rgba(10,102,194,0.1); }
 
-    /* ── OPEN TICKET DESKTOP BUTTON ── */
     .ticket-launcher {
-      position: absolute;
-      bottom: 24px; right: 24px;
+      position: absolute; bottom: 24px; right: 24px;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
       cursor: pointer; z-index: 10;
       animation: floatBtn 3s ease-in-out infinite;
     }
-    @keyframes floatBtn {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-5px); }
-    }
+    @keyframes floatBtn { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     .ticket-launcher-icon {
       width: 52px; height: 52px; border-radius: 12px;
       background: rgba(22,27,34,0.85); backdrop-filter: blur(10px);
@@ -201,35 +182,24 @@
       transition: all 0.2s; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     .ticket-launcher:hover .ticket-launcher-icon {
-      border-color: rgba(88,166,255,0.6);
-      background: rgba(30,40,60,0.9);
+      border-color: rgba(88,166,255,0.6); background: rgba(30,40,60,0.9);
       box-shadow: 0 8px 32px rgba(88,166,255,0.15);
     }
     .ticket-launcher span { font-size: 9px; color: #484f58; text-align: center; }
     .ticket-launcher:hover span { color: #8b949e; }
-
-    /* pulse ring */
     .ticket-launcher-icon::before {
-      content: '';
-      position: absolute; width: 52px; height: 52px;
+      content: ''; position: absolute; width: 52px; height: 52px;
       border-radius: 12px; border: 1px solid rgba(88,166,255,0.3);
       animation: pulseRing 2s ease-out infinite;
     }
-    @keyframes pulseRing {
-      0%   { transform: scale(1); opacity: 0.6; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
+    @keyframes pulseRing { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.5); opacity: 0; } }
 
-    /* ── TICKET WINDOW ── */
     .ticket-window {
-      position: absolute;
-      bottom: 100px; right: 24px;
+      position: absolute; bottom: 100px; right: 24px;
       width: 380px; max-width: calc(100vw - 32px);
-      background: #f0f2f5;
-      border-radius: 8px; overflow: hidden;
+      background: #f0f2f5; border-radius: 8px; overflow: hidden;
       box-shadow: 0 24px 64px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.3);
-      display: none;
-      z-index: 20;
+      display: none; z-index: 20;
       animation: slideUp 0.25s cubic-bezier(0.34,1.4,0.64,1);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
@@ -239,18 +209,14 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* corporate header */
     .ticket-header {
-      background: #003366;
-      padding: 10px 14px;
-      display: flex; align-items: center; gap: 10px;
-      cursor: grab;
+      background: #003366; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px; cursor: grab;
     }
     .ticket-header:active { cursor: grabbing; }
     .corp-logo {
-      width: 28px; height: 28px; border-radius: 4px;
-      background: #fff; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      width: 28px; height: 28px; border-radius: 4px; background: #fff;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .corp-logo svg { display: block; }
     .ticket-header-text { flex: 1; }
@@ -264,10 +230,8 @@
     }
     .ticket-close:hover { background: rgba(255,255,255,0.3); }
 
-    /* nav bar */
     .ticket-nav {
-      background: #003f80;
-      display: flex; gap: 0; padding: 0 14px;
+      background: #003f80; display: flex; gap: 0; padding: 0 14px;
       border-bottom: 2px solid #e8ecf0;
     }
     .ticket-nav-item {
@@ -278,34 +242,25 @@
     .ticket-nav-item.active { color: #fff; border-bottom-color: #5ba3f5; }
     .ticket-nav-item:hover { color: #fff; }
 
-    /* body */
     .ticket-body { padding: 16px; background: #f0f2f5; }
-
-    /* breadcrumb */
     .breadcrumb { font-size: 9px; color: #888; margin-bottom: 12px; }
     .breadcrumb span { color: #003366; }
-
-    /* form */
     .ticket-form-title {
       font-size: 13px; font-weight: 700; color: #1a1a2e;
-      margin-bottom: 12px; padding-bottom: 8px;
-      border-bottom: 1px solid #d0d5dd;
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #d0d5dd;
     }
 
     .form-row { margin-bottom: 10px; }
     .form-label { font-size: 10px; color: #444; font-weight: 600; margin-bottom: 3px; display: block; }
     .form-label .req { color: #c0392b; margin-left: 2px; }
-
     .form-input, .form-select, .form-textarea {
       width: 100%; padding: 6px 9px; border-radius: 4px;
       border: 1px solid #ccc; font-size: 11px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #fff; color: #222; outline: none;
-      transition: border-color 0.15s;
+      background: #fff; color: #222; outline: none; transition: border-color 0.15s;
     }
     .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #003366; }
     .form-textarea { resize: vertical; min-height: 60px; }
-
     .form-row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 
     .priority-row { display: flex; gap: 6px; margin-top: 3px; }
@@ -315,10 +270,10 @@
       background: #fff; transition: all 0.15s;
     }
     .priority-btn:hover { border-color: #003366; }
-    .priority-btn.low.sel    { background: #e6f4ea; border-color: #2e7d32; color: #2e7d32; }
-    .priority-btn.med.sel    { background: #fff8e1; border-color: #f57c00; color: #f57c00; }
-    .priority-btn.high.sel   { background: #fce4ec; border-color: #c62828; color: #c62828; }
-    .priority-btn.crit.sel   { background: #3d0000; border-color: #8b0000; color: #ff5252; }
+    .priority-btn.low.sel  { background: #e6f4ea; border-color: #2e7d32; color: #2e7d32; }
+    .priority-btn.med.sel  { background: #fff8e1; border-color: #f57c00; color: #f57c00; }
+    .priority-btn.high.sel { background: #fce4ec; border-color: #c62828; color: #c62828; }
+    .priority-btn.crit.sel { background: #3d0000; border-color: #8b0000; color: #ff5252; }
 
     .submit-row { display: flex; gap: 8px; margin-top: 14px; }
     .btn-submit {
@@ -336,15 +291,11 @@
     }
     .btn-cancel:hover { border-color: #999; }
 
-    /* confirmation screen */
-    .ticket-confirm {
-      display: none; padding: 24px 16px; text-align: center; background: #f0f2f5;
-    }
+    .ticket-confirm { display: none; padding: 24px 16px; text-align: center; background: #f0f2f5; }
     .ticket-confirm.show { display: block; }
     .confirm-icon {
-      width: 48px; height: 48px; border-radius: 50%;
-      background: #e6f4ea; margin: 0 auto 12px;
-      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 50%; background: #e6f4ea;
+      margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
     }
     .ticket-num {
       font-size: 20px; font-weight: 700; color: #003366;
@@ -371,14 +322,9 @@
     }
     .btn-new-ticket:hover { background: #004a99; }
 
-    /* mobile ticket launcher */
     @media (max-width: 600px) {
-      .ticket-launcher {
-        position: fixed; bottom: 56px; right: 16px;
-      }
-      .ticket-window {
-        position: fixed; bottom: 120px; right: 8px; left: 8px; width: auto;
-      }
+      .ticket-launcher { position: fixed; bottom: 56px; right: 16px; }
+      .ticket-window { position: fixed; bottom: 120px; right: 8px; left: 8px; width: auto; }
     }
   </style>
 </head>
@@ -405,7 +351,6 @@
     <span>about.md</span>
   </div>
 
-  <!-- ABOUT WINDOW -->
   <div class="window" id="main-window">
     <div class="window-bar" id="drag-handle">
       <div class="dots">
@@ -422,8 +367,8 @@
       <div class="md-h2">## Peter De Jesus</div>
       <div class="meta-row">
         <span class="meta-label">Role:</span>
-        <span class="badge blue">HelpDesk</span>
-        <span class="badge purple">Area Metro | Guaynabo</span>
+        <span class="badge blue">IT Technician</span>
+        <span class="badge purple">Condado Collection · San Juan, PR</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Focus:</span>
@@ -448,8 +393,8 @@
       </div>
       <hr class="divider">
       <div class="md-h2">## Currently</div>
+      <div class="list-item">IT Technician @ Condado Collection — hospitality enterprise environment</div>
       <div class="list-item">Studying at WGU — Information Systems B.S.</div>
-      <div class="list-item">HelpDesk experience in enterprise environment</div>
       <div class="list-item">CompTIA A+ Certified</div>
       <div class="list-item">Windows 11 VM Lab in progress → <a class="inline" href="https://github.com/pedejesus2/it-helpdesk-lab" target="_blank">github.com/pedejesus2/it-helpdesk-lab</a></div>
     </div>
@@ -463,7 +408,7 @@
     </div>
   </div>
 
-  <!-- TICKET LAUNCHER BUTTON -->
+  <!-- TICKET LAUNCHER -->
   <div class="ticket-launcher" onclick="toggleTicket()">
     <div class="ticket-launcher-icon">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="1.8">
@@ -478,7 +423,6 @@
 
   <!-- TICKET WINDOW -->
   <div class="ticket-window" id="ticket-window">
-    <!-- corp header -->
     <div class="ticket-header" id="ticket-drag">
       <div class="corp-logo">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#003366">
@@ -492,24 +436,18 @@
       </div>
       <button class="ticket-close" onclick="closeTicket()">✕</button>
     </div>
-
-    <!-- nav -->
     <div class="ticket-nav">
       <div class="ticket-nav-item active">New Ticket</div>
       <div class="ticket-nav-item">My Tickets (∞)</div>
       <div class="ticket-nav-item">KB Articles</div>
     </div>
-
-    <!-- form -->
     <div class="ticket-body" id="ticket-form-body">
       <div class="breadcrumb">Home &gt; IT Support &gt; <span>Submit New Request</span></div>
       <div class="ticket-form-title">📋 Submit a Support Request</div>
-
       <div class="form-row">
         <label class="form-label">Full Name <span class="req">*</span></label>
         <input class="form-input" type="text" id="f-name" placeholder="e.g. John Smith"/>
       </div>
-
       <div class="form-row-split">
         <div>
           <label class="form-label">Employee ID <span class="req">*</span></label>
@@ -529,7 +467,6 @@
           </select>
         </div>
       </div>
-
       <div class="form-row">
         <label class="form-label">Issue Category <span class="req">*</span></label>
         <select class="form-select" id="f-cat">
@@ -546,12 +483,10 @@
           <option>Other (it's complicated)</option>
         </select>
       </div>
-
       <div class="form-row">
         <label class="form-label">Description <span class="req">*</span></label>
         <textarea class="form-textarea" id="f-desc" placeholder="Please describe the issue in detail. 'It doesn't work' is not a description."></textarea>
       </div>
-
       <div class="form-row">
         <label class="form-label">Priority</label>
         <div class="priority-row">
@@ -561,7 +496,6 @@
           <div class="priority-btn crit" onclick="setPriority(this)">💀 Critical</div>
         </div>
       </div>
-
       <div class="form-row">
         <label class="form-label">Have you tried turning it off and on again?</label>
         <select class="form-select" id="f-reboot">
@@ -572,14 +506,11 @@
           <option>I unplugged the whole building</option>
         </select>
       </div>
-
       <div class="submit-row">
         <button class="btn-submit" onclick="submitTicket()">Submit Ticket</button>
         <button class="btn-cancel" onclick="closeTicket()">Cancel</button>
       </div>
     </div>
-
-    <!-- confirmation -->
     <div class="ticket-confirm" id="ticket-confirm">
       <div class="confirm-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2.5">
@@ -609,7 +540,6 @@
 
 </div>
 
-<!-- TASKBAR -->
 <div class="taskbar">
   <button class="taskbar-btn active" id="taskbar-win" onclick="toggleWindow()">
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -635,7 +565,6 @@
 </div>
 
 <script>
-// ── AURORA ──
 const canvas = document.getElementById('aurora');
 const ctx = canvas.getContext('2d');
 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -683,14 +612,12 @@ function drawAurora(ts){
 }
 requestAnimationFrame(drawAurora);
 
-// ── CLOCK ──
 function updateClock(){
   document.getElementById('clock').textContent=
     new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 }
 updateClock(); setInterval(updateClock,1000);
 
-// ── ABOUT WINDOW ──
 const isMobile=()=>window.innerWidth<=600;
 const win=document.getElementById('main-window');
 const handle=document.getElementById('drag-handle');
@@ -730,30 +657,17 @@ document.addEventListener('mousemove',e=>{
 });
 document.addEventListener('mouseup',()=>{ dragging=false; win.classList.remove('dragging'); });
 
-// ── TICKET WINDOW ──
 const ticketWin = document.getElementById('ticket-window');
 const ticketBtn = document.getElementById('taskbar-ticket');
+function toggleTicket(){ ticketWin.classList.contains('open')?closeTicket():openTicket(); }
+function openTicket(){ ticketWin.classList.add('open'); ticketBtn.classList.add('active'); }
+function closeTicket(){ ticketWin.classList.remove('open'); ticketBtn.classList.remove('active'); }
 
-function toggleTicket(){
-  const isOpen = ticketWin.classList.contains('open');
-  if(isOpen){ closeTicket(); } else { openTicket(); }
-}
-function openTicket(){
-  ticketWin.classList.add('open');
-  ticketBtn.classList.add('active');
-}
-function closeTicket(){
-  ticketWin.classList.remove('open');
-  ticketBtn.classList.remove('active');
-}
-
-// priority selection
 function setPriority(el){
   document.querySelectorAll('.priority-btn').forEach(b=>b.classList.remove('sel'));
   el.classList.add('sel');
 }
 
-// submit ticket
 function submitTicket(){
   const name = document.getElementById('f-name').value.trim();
   const cat  = document.getElementById('f-cat').value;
@@ -761,16 +675,11 @@ function submitTicket(){
   if(!name){ alert('Please enter your name.'); return; }
   if(cat === '-- Select Category --'){ alert('Please select an issue category.'); return; }
   if(!desc){ alert('Please describe the issue.'); return; }
-
-  // generate fake ticket number
   const num = 'INC-' + String(Math.floor(Math.random()*900000+100000));
   document.getElementById('ticket-num').textContent = '#' + num;
-
-  // fake ETA
   const days = Math.floor(Math.random()*4)+2;
   document.getElementById('confirm-eta').textContent =
     `Estimated response time: ${days}–${days+2} business days (we're very busy).`;
-
   document.getElementById('ticket-form-body').style.display = 'none';
   document.getElementById('ticket-confirm').classList.add('show');
 }
@@ -787,17 +696,14 @@ function resetTicket(){
   document.getElementById('ticket-confirm').classList.remove('show');
 }
 
-// draggable ticket window
 const ticketDrag = document.getElementById('ticket-drag');
 let tDragging=false, tStartX, tStartY, tStartL, tStartT;
 ticketDrag.addEventListener('mousedown',e=>{
   if(isMobile())return;
   tDragging=true;
   const r=ticketWin.getBoundingClientRect();
-  ticketWin.style.bottom='auto';
-  ticketWin.style.right='auto';
-  ticketWin.style.left=r.left+'px';
-  ticketWin.style.top=r.top+'px';
+  ticketWin.style.bottom='auto'; ticketWin.style.right='auto';
+  ticketWin.style.left=r.left+'px'; ticketWin.style.top=r.top+'px';
   tStartX=e.clientX;tStartY=e.clientY;tStartL=r.left;tStartT=r.top;
   e.preventDefault();
 });
